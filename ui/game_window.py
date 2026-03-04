@@ -44,6 +44,9 @@ class GameWindow(tk.Frame):
     
     def _setup_ui(self):
         """设置主界面布局"""
+        # 创建样式
+        self._create_styles()
+        
         # 创建主框架
         main_paned = ttk.PanedWindow(self, orient=tk.HORIZONTAL)
         main_paned.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
@@ -59,6 +62,35 @@ class GameWindow(tk.Frame):
         # 设置左右面板内容
         self._setup_left_panel(left_frame)
         self._setup_right_panel(right_frame)
+    
+    def _create_styles(self):
+        """创建自定义样式"""
+        style = ttk.Style()
+        
+        # 种子按钮样式
+        style.configure('SeedButton.TButton',
+                      font=('微软雅黑', 10, 'bold'),
+                      padding=10,
+                      relief='raised',
+                      borderwidth=2)
+        
+        # 选中的种子按钮样式
+        style.configure('SelectedSeedButton.TButton',
+                      font=('微软雅黑', 10, 'bold'),
+                      padding=10,
+                      relief='sunken',
+                      borderwidth=2,
+                      background='#4CAF50',
+                      foreground='white')
+        
+        # 禁用的种子按钮样式
+        style.configure('DisabledSeedButton.TButton',
+                      font=('微软雅黑', 10),
+                      padding=10,
+                      relief='flat',
+                      borderwidth=1,
+                      background='#E0E0E0',
+                      foreground='#9E9E9E')
     
     def _setup_left_panel(self, parent):
         """设置左侧面板"""
@@ -158,21 +190,44 @@ class GameWindow(tk.Frame):
         quick_frame = ttk.LabelFrame(parent, text="⚡ 快捷操作", padding=10)
         quick_frame.pack(fill=tk.X, padx=5, pady=5)
         
-        # 一行按钮
-        button_frame = ttk.Frame(quick_frame)
-        button_frame.pack(fill=tk.X)
+        # 第一行按钮
+        button_frame1 = ttk.Frame(quick_frame)
+        button_frame1.pack(fill=tk.X, pady=(0, 5))
         
         ttk.Button(
-            button_frame,
+            button_frame1,
             text="💧 全部浇水",
             command=self._water_all_plots
         ).pack(side=tk.LEFT, padx=(0, 5), fill=tk.X, expand=True)
         
         ttk.Button(
-            button_frame,
+            button_frame1,
             text="🌾 全部收获",
             command=self._harvest_all_mature
         ).pack(side=tk.LEFT, fill=tk.X, expand=True)
+        
+        # 第二行按钮
+        button_frame2 = ttk.Frame(quick_frame)
+        button_frame2.pack(fill=tk.X)
+        
+        # 自动运行开关
+        auto_run_frame = ttk.Frame(button_frame2)
+        auto_run_frame.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        
+        ttk.Label(auto_run_frame, text="自动运行:").pack(side=tk.LEFT, padx=(0, 5))
+        self.auto_run_var = tk.BooleanVar(value=self.game_manager.auto_run)
+        ttk.Checkbutton(
+            auto_run_frame,
+            variable=self.auto_run_var,
+            command=self._toggle_auto_run
+        ).pack(side=tk.LEFT)
+        
+        # 手动推进按钮
+        ttk.Button(
+            button_frame2,
+            text="⏭️ 推进一天",
+            command=self._advance_day
+        ).pack(side=tk.LEFT, padx=(5, 0), fill=tk.X, expand=True)
     
     def _create_detailed_menus(self, parent):
         """创建详细菜单区"""
@@ -197,16 +252,31 @@ class GameWindow(tk.Frame):
         shop_frame = ttk.Frame(parent)
         parent.add(shop_frame, text="🛒 商店")
         
-        # 作物列表
-        listbox_frame = ttk.Frame(shop_frame)
-        listbox_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+        # 作物按钮网格
+        buttons_frame = ttk.Frame(shop_frame)
+        buttons_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
         
-        self.shop_listbox = tk.Listbox(listbox_frame, font=('微软雅黑', 10))
-        scrollbar = ttk.Scrollbar(listbox_frame, orient=tk.VERTICAL, command=self.shop_listbox.yview)
-        self.shop_listbox.configure(yscrollcommand=scrollbar.set)
+        # 创建滚动条
+        canvas = tk.Canvas(buttons_frame)
+        scrollbar = ttk.Scrollbar(buttons_frame, orient=tk.VERTICAL, command=canvas.yview)
+        self.scrollable_frame = ttk.Frame(canvas)
         
-        self.shop_listbox.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: canvas.configure(
+                scrollregion=canvas.bbox("all")
+            )
+        )
+        
+        canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+        
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
         scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        # 存储种子按钮
+        self.seed_buttons = {}
+        self.selected_seed = None
         
         # 购买按钮
         ttk.Button(
@@ -222,6 +292,25 @@ class GameWindow(tk.Frame):
         ttk.Label(qty_frame, text="数量:").pack(side=tk.LEFT)
         self.quantity_var = tk.StringVar(value="1")
         ttk.Entry(qty_frame, textvariable=self.quantity_var, width=10).pack(side=tk.LEFT, padx=(5, 0))
+        
+        # 文本输入字段
+        input_frame = ttk.Frame(shop_frame)
+        input_frame.pack(fill=tk.X, pady=(10, 0))
+        
+        ttk.Label(input_frame, text="快速选择:").pack(side=tk.LEFT)
+        self.seed_input_var = tk.StringVar()
+        seed_input = ttk.Entry(input_frame, textvariable=self.seed_input_var, width=20)
+        seed_input.pack(side=tk.LEFT, padx=(5, 0), fill=tk.X, expand=True)
+        seed_input.insert(0, "输入种子名称或编号")
+        seed_input.bind("<FocusIn>", lambda e: seed_input.delete(0, tk.END))
+        seed_input.bind("<Return>", self._on_seed_input_submit)
+        
+        # 输入验证按钮
+        ttk.Button(
+            input_frame,
+            text="确认",
+            command=self._on_seed_input_submit
+        ).pack(side=tk.LEFT, padx=(5, 0))
     
     def _create_achievements_tab(self, parent):
         """创建成就选项卡"""
@@ -363,8 +452,7 @@ class GameWindow(tk.Frame):
     
     def _buy_selected_seed(self):
         """购买选中的种子"""
-        selection = self.shop_listbox.curselection()
-        if not selection:
+        if not self.selected_seed:
             messagebox.showwarning("警告", "请先选择要购买的种子！")
             return
         
@@ -376,14 +464,15 @@ class GameWindow(tk.Frame):
             messagebox.showwarning("警告", "请输入有效的购买数量！")
             return
         
-        # 获取选中的作物名
-        selected_text = self.shop_listbox.get(selection[0])
-        crop_name = selected_text.split()[1]  # 提取作物名
+        crop_name = self.selected_seed
         
         success, msg = self.game_manager.buy_seeds(crop_name, quantity)
         self._add_message(msg)
         if success:
             self._update_display()
+        else:
+            # 购买失败时，显示详细的错误信息
+            messagebox.showinfo("购买失败", msg)
     
     def _advance_day(self):
         """推进到下一天"""
@@ -478,17 +567,104 @@ class GameWindow(tk.Frame):
     
     def _update_shop_display(self):
         """更新商店显示"""
-        self.shop_listbox.delete(0, tk.END)
+        # 清空现有按钮
+        for button in self.seed_buttons.values():
+            button.destroy()
+        self.seed_buttons.clear()
+        
+        # 获取作物列表
         crops = self.game_manager.economy_system.get_all_crops()
         current_season = self.game_manager.get_current_season()
         
-        for crop in crops:
+        # 创建种子按钮网格
+        row = 0
+        col = 0
+        max_cols = 2
+        
+        for i, crop in enumerate(crops):
             can_plant = crop.can_plant_in_season(current_season)
             status = "✅" if can_plant else "❌"
-            self.shop_listbox.insert(
-                tk.END,
-                f"{crop.emoji} {crop.name} - {crop.seed_price}金/个 ({status})"
+            
+            # 创建按钮
+            btn_text = f"{crop.emoji} {crop.name}\n{crop.seed_price}金/个\n{status}"
+            btn = ttk.Button(
+                self.scrollable_frame,
+                text=btn_text,
+                style='SeedButton.TButton' if can_plant else 'DisabledSeedButton.TButton',
+                command=lambda c=crop: self._select_seed(c)
             )
+            
+            # 放置按钮
+            btn.grid(row=row, column=col, padx=5, pady=5, sticky='nsew')
+            
+            # 存储按钮
+            self.seed_buttons[crop.name] = btn
+            
+            # 更新行列
+            col += 1
+            if col >= max_cols:
+                col = 0
+                row += 1
+        
+        # 确保滚动区域更新
+        if hasattr(self, 'scrollable_frame'):
+            self.scrollable_frame.update_idletasks()
+    
+    def _select_seed(self, crop):
+        """选择种子"""
+        # 取消之前的选择
+        if self.selected_seed and self.selected_seed in self.seed_buttons:
+            self.seed_buttons[self.selected_seed].configure(style='SeedButton.TButton')
+        
+        # 设置新选择
+        self.selected_seed = crop.name
+        if crop.name in self.seed_buttons:
+            self.seed_buttons[crop.name].configure(style='SelectedSeedButton.TButton')
+        
+        # 更新输入字段
+        self.seed_input_var.set(crop.name)
+        self._add_message(f"🌱 已选择: {crop.emoji} {crop.name}")
+    
+    def _on_seed_input_submit(self, event=None):
+        """处理种子输入提交"""
+        input_text = self.seed_input_var.get().strip()
+        if not input_text:
+            messagebox.showwarning("警告", "请输入种子名称或编号！")
+            return
+        
+        # 验证输入
+        if not self._validate_seed_input(input_text):
+            messagebox.showwarning("警告", "输入格式不正确！请输入有效的种子名称或编号。")
+            return
+        
+        # 查找种子
+        crops = self.game_manager.economy_system.get_all_crops()
+        found = False
+        
+        # 尝试按名称匹配
+        for crop in crops:
+            if input_text.lower() == crop.name.lower():
+                self._select_seed(crop)
+                found = True
+                break
+        
+        # 尝试按编号匹配
+        if not found:
+            try:
+                index = int(input_text) - 1
+                if 0 <= index < len(crops):
+                    self._select_seed(crops[index])
+                    found = True
+            except ValueError:
+                pass
+        
+        if not found:
+            messagebox.showwarning("警告", f"未找到种子: {input_text}")
+    
+    def _validate_seed_input(self, input_text):
+        """验证种子输入"""
+        # 允许字母、数字和空格
+        return all(c.isalnum() or c.isspace() for c in input_text)
     
     def _update_achievements_display(self):
         """更新成就显示"""
@@ -556,9 +732,50 @@ class GameWindow(tk.Frame):
     
     def _start_auto_update(self):
         """启动自动更新"""
+        import time
+        
         def auto_update():
             if self.winfo_exists():
+                # 检查自动推进时间
+                current_time = time.time()
+                day_result = self.game_manager.check_auto_advance(current_time)
+                
+                # 处理自动推进结果
+                if day_result:
+                    # 显示结果
+                    self._add_message("=" * 50)
+                    self._add_message(f"🌞 第{day_result.day}天 - {day_result.season} - {day_result.weather}")
+                    self._add_message("=" * 50)
+                    
+                    if day_result.events:
+                        self._add_message("📜 今日事件:")
+                        for event in day_result.events:
+                            self._add_message(f"   {event}")
+                    
+                    if day_result.crops_matured > 0:
+                        self._add_message(f"🌿 有 {day_result.crops_matured} 个作物成熟了！")
+                    
+                    if day_result.crops_died > 0 or day_result.crops_destroyed > 0:
+                        self._add_message(f"💀 损失了 {day_result.crops_died + day_result.crops_destroyed} 个作物。")
+                    
+                    self._add_message("=" * 50)
+                
                 self._update_display()
                 self.after(1000, auto_update)  # 每秒更新一次
         
         auto_update()
+        
+        # 绑定窗口大小变化事件
+        self.bind('<Configure>', self._on_resize)
+    
+    def _on_resize(self, event):
+        """处理窗口大小变化事件"""
+        # 当窗口大小变化时，更新农田显示
+        if hasattr(self, 'plot_buttons') and self.plot_buttons:
+            self._update_farm_display()
+    
+    def _toggle_auto_run(self):
+        """切换自动运行状态"""
+        self.game_manager.auto_run = self.auto_run_var.get()
+        status = "开启" if self.game_manager.auto_run else "关闭"
+        self._add_message(f"⚙️ 自动运行已{status}")

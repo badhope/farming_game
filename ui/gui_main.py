@@ -66,14 +66,54 @@ class FarmingGameGUI:
         style.theme_use('clam')
         
         # 自定义样式
-        style.configure('Title.TLabel', font=('微软雅黑', 16, 'bold'))
-        style.configure('Header.TLabel', font=('微软雅黑', 12, 'bold'))
-        style.configure('Normal.TLabel', font=('微软雅黑', 10))
-        style.configure('Small.TLabel', font=('微软雅黑', 9))
+        style.configure('Title.TLabel', font=('微软雅黑', 16, 'bold'), foreground='#4CAF50')
+        style.configure('Header.TLabel', font=('微软雅黑', 12, 'bold'), foreground='#2E7D32')
+        style.configure('Normal.TLabel', font=('微软雅黑', 10), foreground='#333333')
+        style.configure('Small.TLabel', font=('微软雅黑', 9), foreground='#666666')
         
         # 按钮样式
-        style.configure('Action.TButton', font=('微软雅黑', 10, 'bold'))
-        style.configure('Menu.TButton', font=('微软雅黑', 11))
+        style.configure('Action.TButton', font=('微软雅黑', 10, 'bold'), background='#4CAF50', foreground='white')
+        style.configure('Action.TButton:hover', background='#45a049')
+        style.configure('Menu.TButton', font=('微软雅黑', 11), background='#f0f0f0', foreground='#333333')
+        style.configure('Menu.TButton:hover', background='#e0e0e0')
+        
+        # 种子按钮样式
+        style.configure('SeedButton.TButton',
+                      font=('微软雅黑', 10, 'bold'),
+                      padding=10,
+                      relief='raised',
+                      borderwidth=2,
+                      background='#E8F5E8',
+                      foreground='#2E7D32')
+        
+        style.configure('SelectedSeedButton.TButton',
+                      font=('微软雅黑', 10, 'bold'),
+                      padding=10,
+                      relief='sunken',
+                      borderwidth=2,
+                      background='#4CAF50',
+                      foreground='white')
+        
+        style.configure('DisabledSeedButton.TButton',
+                      font=('微软雅黑', 10),
+                      padding=10,
+                      relief='flat',
+                      borderwidth=1,
+                      background='#E0E0E0',
+                      foreground='#9E9E9E')
+        
+        # 框架样式
+        style.configure('TLabelFrame', borderwidth=2, relief='groove', foreground='#2E7D32', background='#F8FFF8')
+        style.configure('TLabelFrame.Label', font=('微软雅黑', 11, 'bold'), foreground='#2E7D32')
+        
+        # 滚动条样式
+        style.configure('TScrollbar', background='#f0f0f0', troughcolor='#e0e0e0')
+        
+        # 输入框样式
+        style.configure('TEntry', font=('微软雅黑', 10), padding=5)
+        
+        # 文本框样式
+        style.configure('TText', font=('微软雅黑', 10))
     
     def _show_welcome_screen(self):
         """显示欢迎界面"""

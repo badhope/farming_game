@@ -241,21 +241,43 @@ class EconomySystem:
     def sell_all_crops(self, player: Player) -> List[TransactionResult]:
         """
         出售背包中的所有作物
-        
+
         Args:
             player: 玩家对象
-            
+
         Returns:
             List[TransactionResult]: 所有交易结果列表
         """
         results = []
         
-        # 获取背包中所有作物名称（复制一份，因为会在循环中修改）
-        items_to_sell = list(player.inventory.keys())
-        
-        for crop_name in items_to_sell:
-            result = self.sell_all_of_type(player, crop_name)
-            results.append(result)
+        try:
+            # 获取背包中所有作物名称（复制一份，因为会在循环中修改）
+            items_to_sell = list(player.inventory.keys())
+            
+            for crop_name in items_to_sell:
+                try:
+                    result = self.sell_all_of_type(player, crop_name)
+                    results.append(result)
+                except Exception as e:
+                    # 单个作物出售失败不影响其他作物
+                    results.append(TransactionResult(
+                        success=False,
+                        item_name=crop_name,
+                        quantity=0,
+                        unit_price=0,
+                        total_amount=0,
+                        message=f"❌ 出售 {crop_name} 时出错: {str(e)}"
+                    ))
+        except Exception as e:
+            # 整体操作失败，返回错误结果
+            results.append(TransactionResult(
+                success=False,
+                item_name="",
+                quantity=0,
+                unit_price=0,
+                total_amount=0,
+                message=f"❌ 出售所有作物时出错: {str(e)}"
+            ))
         
         return results
     

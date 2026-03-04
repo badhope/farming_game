@@ -113,22 +113,29 @@ class Plot:
     def grow(self) -> bool:
         """
         作物生长一天
-        
+
         Returns:
             bool: 是否成功生长
         """
-        if self.is_empty() or self.is_mature():
-            return False
-        
-        if self.watered_today:
-            self.growth_stage += 1
-            self.days_watered += 1
+        try:
+            if self.is_empty() or self.is_mature():
+                return False
             
-            # 防止超过最大阶段
-            if self.growth_stage > 4:
+            if self.watered_today:
+                self.growth_stage += 1
+                self.days_watered += 1
+                
+                # 防止超过最大阶段
+                if self.growth_stage > 4:
+                    self.growth_stage = 4
+                
+                return True
+        except Exception as e:
+            # 发生错误时，确保地块状态仍然有效
+            if self.growth_stage < 0:
+                self.growth_stage = 0
+            elif self.growth_stage > 4:
                 self.growth_stage = 4
-            
-            return True
         
         return False
     

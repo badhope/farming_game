@@ -13,6 +13,7 @@ from config.settings import (
 from models import Crop, Plot, Player, PlayerStats, Achievement, AchievementManager
 from core.time_system import TimeSystem
 from core.economy import EconomySystem
+from core.event_system import EventSystem
 
 
 @dataclass
@@ -43,6 +44,7 @@ class GameManager:
         self.time_system = TimeSystem()
         self.economy_system = EconomySystem()
         self.achievement_manager = AchievementManager()
+        self.event_system = EventSystem()  # 事件系统
         
         # 玩家数据
         self.player = Player()
@@ -57,6 +59,11 @@ class GameManager:
         # 游戏状态
         self.is_running = True
         self.messages: List[str] = []  # 消息队列
+        
+        # 自动运行机制
+        self.auto_run = True  # 自动运行开关
+        self.last_auto_advance = 0  # 上次自动推进时间
+        self.auto_advance_interval = 30  # 自动推进间隔（秒）
     
     def _init_plots(self) -> None:
         """初始化农田"""
@@ -64,18 +71,22 @@ class GameManager:
         self.plots = [[Plot() for _ in range(size)] for _ in range(size)]
     
     def _init_achievements(self) -> None:
-        """初始化成就系统"""
-        for ach_id, ach_data in AchievementData.ACHIEVEMENTS.items():
+        """
+        初始化成就系统
+        
+        遍历所有成就数据，创建成就对象并添加到成就管理器中
+        """
+        for achievement_id, achievement_data in AchievementData.ACHIEVEMENTS.items():
             achievement = Achievement(
-                id=ach_id,
-                name=ach_data["name"],
-                description=ach_data["description"],
-                condition=ach_data["condition"],
-                reward_text=ach_data["reward_text"],
+                id=achievement_id,
+                name=achievement_data["name"],
+                description=achievement_data["description"],
+                condition=achievement_data["condition"],
+                reward_text=achievement_data["reward_text"],
             )
             
             # 设置进度目标
-            condition = ach_data["condition"]
+            condition = achievement_data["condition"]
             if ">=" in condition:
                 parts = condition.split(">=")
                 if len(parts) == 2:
@@ -90,18 +101,23 @@ class GameManager:
     def _rebuild_plots(self, old_size: int, new_size: int) -> None:
         """
         重建农田（升级时保留原有作物）
-        
+
         Args:
             old_size: 原有农田大小
             new_size: 新农田大小
         """
-        old_plots = self.plots
-        self.plots = [[Plot() for _ in range(new_size)] for _ in range(new_size)]
-        
-        # 复制原有作物
-        for i in range(min(old_size, new_size)):
-            for j in range(min(old_size, new_size)):
-                self.plots[i][j] = old_plots[i][j]
+        try:
+            old_plots = self.plots
+            self.plots = [[Plot() for _ in range(new_size)] for _ in range(new_size)]
+            
+            # 复制原有作物
+            for i in range(min(old_size, new_size)):
+                for j in range(min(old_size, new_size)):
+                    if i < len(old_plots) and j < len(old_plots[i]):
+                        self.plots[i][j] = old_plots[i][j]
+        except Exception as e:
+            # 发生错误时，确保至少有一个有效的地块矩阵
+            self.plots = [[Plot() for _ in range(max(old_size, 1))] for _ in range(max(old_size, 1))]
     
     # ========== 时间相关 ==========
     
@@ -326,89 +342,111 @@ class GameManager:
     def advance_day(self) -> DayResult:
         """
         推进一天，处理所有日常事件
-        
+
         Returns:
             DayResult: 当天结果数据
         """
-        result = DayResult(
-            day=self.time_system.day,
-            season=self.time_system.season.value,
-            weather=self.time_system.weather.value,
-            crops_grown=0,
-            crops_matured=0,
-            crops_died=0,
-            crops_destroyed=0,
-            events=[]
-        )
-        
-        # 玩家新的一天
-        self.player.new_day()
-        
-        # 处理天气效果
-        is_rainy = self.time_system.is_rainy()
-        is_stormy = self.time_system.is_stormy()
-        
-        # 遍历所有地块
-        for row in self.plots:
-            for plot in row:
-                if plot.is_empty():
-                    continue
-                
-                crop = plot.crop
-                
-                # 检查季节是否适宜
-                if not crop.can_plant_in_season(self.time_system.season):
-                    plot.clear()
-                    result.crops_died += 1
-                    result.events.append(f"💀 {crop.emoji} {crop.name} 因季节变换而枯萎")
-                    continue
-                
-                # 雨天自动浇水
-                if is_rainy:
-                    plot.force_water()
-                
-                # 暴风雨可能摧毁作物
-                if is_stormy and random.random() < GameConfig.STORM_DAMAGE_CHANCE:
-                    plot.clear()
-                    result.crops_destroyed += 1
-                    result.events.append(f"⛈️ {crop.emoji} {crop.name} 被暴风雨摧毁")
-                    continue
-                
-                # 作物生长
-                was_growing = plot.is_growing()
-                old_stage = plot.growth_stage
-                
-                if plot.watered_today:
-                    plot.grow()
-                    result.crops_grown += 1
-                    
-                    # 检查是否新成熟
-                    if old_stage < 4 and plot.is_mature():
-                        result.crops_matured += 1
-                        result.events.append(f"🌿 {crop.emoji} {crop.name} 成熟了！")
-                
-                # 重置浇水状态（非雨天）
-                if not is_rainy:
-                    plot.reset_water_status()
-        
-        # 推进时间
-        time_events = self.time_system.advance_day()
-        
-        # 处理时间事件
-        if time_events["new_season"]:
-            result.events.append(f"🍂 季节变换：进入{time_events['season_changed_to'].value}！")
-        
-        if time_events["new_year"]:
-            result.events.append(f"🎉 新年快乐！现在是第{self.time_system.year}年！")
-        
-        # 检查成就
-        self._check_achievements()
-        
-        # 自动保存
-        if self.time_system.day % GameConfig.AUTO_SAVE_INTERVAL == 0:
-            result.events.append("💾 游戏已自动保存")
-        
-        return result
+        try:
+            result = DayResult(
+                day=self.time_system.day,
+                season=self.time_system.season.value,
+                weather=self.time_system.weather.value,
+                crops_grown=0,
+                crops_matured=0,
+                crops_died=0,
+                crops_destroyed=0,
+                events=[]
+            )
+            
+            # 玩家新的一天
+            self.player.new_day()
+            
+            # 处理天气效果
+            is_rainy = self.time_system.is_rainy()
+            is_stormy = self.time_system.is_stormy()
+            
+            # 遍历所有地块
+            for row in self.plots:
+                for plot in row:
+                    try:
+                        if plot.is_empty():
+                            continue
+                        
+                        crop = plot.crop
+                        
+                        # 检查季节是否适宜
+                        if not crop.can_plant_in_season(self.time_system.season):
+                            plot.clear()
+                            result.crops_died += 1
+                            result.events.append(f"💀 {crop.emoji} {crop.name} 因季节变换而枯萎")
+                            continue
+                        
+                        # 雨天自动浇水
+                        if is_rainy:
+                            plot.force_water()
+                        
+                        # 暴风雨可能摧毁作物
+                        if is_stormy and random.random() < GameConfig.STORM_DAMAGE_CHANCE:
+                            plot.clear()
+                            result.crops_destroyed += 1
+                            result.events.append(f"⛈️ {crop.emoji} {crop.name} 被暴风雨摧毁")
+                            continue
+                        
+                        # 作物生长
+                        was_growing = plot.is_growing()
+                        old_stage = plot.growth_stage
+                        
+                        if plot.watered_today:
+                            plot.grow()
+                            result.crops_grown += 1
+                            
+                            # 检查是否新成熟
+                            if old_stage < 4 and plot.is_mature():
+                                result.crops_matured += 1
+                                result.events.append(f"🌿 {crop.emoji} {crop.name} 成熟了！")
+                        
+                        # 重置浇水状态（非雨天）
+                        if not is_rainy:
+                            plot.reset_water_status()
+                    except Exception as e:
+                        # 单个地块处理失败不影响其他地块
+                        result.events.append(f"⚠️ 处理地块时出错: {str(e)}")
+            
+            # 推进时间
+            time_events = self.time_system.advance_day()
+            
+            # 处理时间事件
+            if time_events["new_season"]:
+                result.events.append(f"🍂 季节变换：进入{time_events['season_changed_to'].value}！")
+            
+            if time_events["new_year"]:
+                result.events.append(f"🎉 新年快乐！现在是第{self.time_system.year}年！")
+            
+            # 检查成就
+            self._check_achievements()
+            
+            # 检查事件
+            event_messages = self.event_system.check_events(self)
+            for message in event_messages:
+                result.events.append(f"📅 {message}")
+            
+            # 自动保存
+            if self.time_system.day % GameConfig.AUTO_SAVE_INTERVAL == 0:
+                result.events.append("💾 游戏已自动保存")
+            
+            return result
+        except Exception as e:
+            # 发生严重错误时，返回一个基本的结果对象
+            return DayResult(
+                day=self.time_system.day,
+                season=self.time_system.season.value,
+                weather=self.time_system.weather.value,
+                crops_grown=0,
+                crops_matured=0,
+                crops_died=0,
+                crops_destroyed=0,
+                events=[f"❌ 推进日期时出错: {str(e)}"]
+            )
     
     # ========== 商店与交易 ==========
     
@@ -579,7 +617,7 @@ class GameManager:
     def get_game_summary(self) -> Dict:
         """
         获取游戏状态摘要
-        
+
         Returns:
             Dict: 游戏状态字典
         """
@@ -596,6 +634,26 @@ class GameManager:
             "achievements": self.achievement_manager.get_unlocked_count(),
             "total_achievements": self.achievement_manager.get_total_count(),
         }
+    
+    def check_auto_advance(self, current_time: float) -> Optional[DayResult]:
+        """
+        检查是否需要自动推进时间
+
+        Args:
+            current_time: 当前时间（秒）
+
+        Returns:
+            Optional[DayResult]: 如果自动推进了时间，返回推进结果；否则返回None
+        """
+        if not self.auto_run:
+            return None
+        
+        # 检查是否达到自动推进间隔
+        if current_time - self.last_auto_advance >= self.auto_advance_interval:
+            self.last_auto_advance = current_time
+            return self.advance_day()
+        
+        return None
     
     def __str__(self) -> str:
         return f"GameManager({self.get_current_date()})"

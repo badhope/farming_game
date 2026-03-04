@@ -213,6 +213,48 @@ class CropData:
             "crop_type": CropType.FLOWER,
             "description": "夏季花卉，高价值，装饰农场。"
         },
+        "玫瑰": {
+            "seed_price": 300,
+            "sell_price": 700,
+            "grow_days": 10,
+            "seasons": [Season.SPRING, Season.SUMMER],
+            "water_needed": 2,
+            "emoji": "🌹",
+            "crop_type": CropType.FLOWER,
+            "description": "美丽的花卉，高价值，适合送礼。"
+        },
+        "郁金香": {
+            "seed_price": 200,
+            "sell_price": 500,
+            "grow_days": 8,
+            "seasons": [Season.SPRING],
+            "water_needed": 1,
+            "emoji": "🌷",
+            "crop_type": CropType.FLOWER,
+            "description": "春季花卉，色彩鲜艳，装饰效果好。"
+        },
+        
+        # ========== 冬季作物 ==========
+        "萝卜": {
+            "seed_price": 60,
+            "sell_price": 150,
+            "grow_days": 4,
+            "seasons": [Season.WINTER],
+            "water_needed": 1,
+            "emoji": "🥬",
+            "crop_type": CropType.VEGETABLE,
+            "description": "冬季蔬菜，耐寒性强。"
+        },
+        "大白菜": {
+            "seed_price": 80,
+            "sell_price": 180,
+            "grow_days": 5,
+            "seasons": [Season.WINTER],
+            "water_needed": 1,
+            "emoji": "🥬",
+            "crop_type": CropType.VEGETABLE,
+            "description": "冬季主要蔬菜，营养丰富。"
+        },
     }
     
     @classmethod
