@@ -21,9 +21,40 @@ from models.soil import SoilQuality, FertilizerType, Fertilizer, SoilState, Fert
 from models.weather import WeatherType, WeatherEffect, WeatherAgricultureSystem, Season
 from models.color_system import ColorCustomizationSystem, ColorRegistry, ColorPalette, ColorCategory, CustomColor
 from models.branching_story import BranchingNarrativeSystem, StoryBranch, BranchNode, StoryChoice, Consequence, WorldState
-from models.biohazard_story import BiohazardStoryManager, WorldLore, StoryKeyPoint, CharacterMemory, InfectionLevel, FactionType
+from models.biohazard_story import BiohazardStoryManager, WorldLore, StoryKeyPoint, CharacterMemory, InfectionLevel
 from models.random_events import RandomEventManager, RandomEvent, RandomEventType, EventPriority
 from models.combat_system import CombatSystem, CharacterGrowthSystem, Weapon, Armor, Enemy, WeaponType, ArmorType, EnemyType, DamageType, SkillType
+
+from models.character_system import (
+    EnhancedCharacterProfile, EnhancedCharacterManager, CharacterRegistry,
+    VisualAppearance, Backstory, Personality, PersonalityTrait,
+    DialogueTree, DialogueNode, DialogueChoice, DialogueCondition,
+    ShopInventory, ShopItem, NPCArchetype
+)
+from models.world_system import (
+    WorldManager, WorldMap, WeatherSystem, DayNightCycle,
+    Biome, BiomeType, BiomeRegistry, WorldTile, WorldRegion,
+    PointOfInterest, DynamicWeather, TimeOfDay, MoonPhase, WeatherIntensity
+)
+from models.gameplay_system import (
+    GameplayManager, FarmingManager, BuildingManager, CookingManager,
+    FarmField, PlantedCrop, CropInfo, CropStage, CropQuality,
+    PlacedBuilding, BuildingInfo, BuildingType, BuildingRegistry,
+    Recipe, CookedFood, FoodEffect, FoodEffectType, RecipeCategory, RecipeRegistry,
+    CropRegistry
+)
+from models.inventory_system import (
+    MMORPGInventorySystem, ItemInstance, ItemFactory, ItemStats, ItemEffect,
+    InventorySlot, StorageContainer, EquipmentManager, BankAccount,
+    EquipmentSlot, ItemCategory
+)
+from models.interaction_system import (
+    InteractionSystem, RelationshipManager, ReputationManager, QuestManager,
+    CharacterRelationship, RelationshipType, RelationshipEvent,
+    FactionReputation, ReputationLevel, FactionType,
+    Quest, QuestObjective, QuestReward, QuestType, QuestStatus, QuestGenerator,
+    InteractionType
+)
 
 
 __all__ = [
@@ -105,7 +136,6 @@ __all__ = [
     "StoryKeyPoint",
     "CharacterMemory",
     "InfectionLevel",
-    "FactionType",
     "RandomEventManager",
     "RandomEvent",
     "RandomEventType",
@@ -120,4 +150,83 @@ __all__ = [
     "EnemyType",
     "DamageType",
     "SkillType",
+    
+    "EnhancedCharacterProfile",
+    "EnhancedCharacterManager",
+    "CharacterRegistry",
+    "VisualAppearance",
+    "Backstory",
+    "Personality",
+    "PersonalityTrait",
+    "DialogueTree",
+    "DialogueNode",
+    "DialogueChoice",
+    "DialogueCondition",
+    "ShopInventory",
+    "ShopItem",
+    "NPCArchetype",
+    
+    "WorldManager",
+    "WorldMap",
+    "WeatherSystem",
+    "DayNightCycle",
+    "Biome",
+    "BiomeType",
+    "BiomeRegistry",
+    "WorldTile",
+    "WorldRegion",
+    "PointOfInterest",
+    "DynamicWeather",
+    "TimeOfDay",
+    "MoonPhase",
+    "WeatherIntensity",
+    
+    "GameplayManager",
+    "FarmingManager",
+    "BuildingManager",
+    "CookingManager",
+    "FarmField",
+    "PlantedCrop",
+    "CropInfo",
+    "CropStage",
+    "CropQuality",
+    "PlacedBuilding",
+    "BuildingInfo",
+    "BuildingType",
+    "BuildingRegistry",
+    "CookedFood",
+    "FoodEffect",
+    "FoodEffectType",
+    "RecipeCategory",
+    "RecipeRegistry",
+    "CropRegistry",
+    
+    "MMORPGInventorySystem",
+    "ItemInstance",
+    "ItemFactory",
+    "ItemStats",
+    "ItemEffect",
+    "InventorySlot",
+    "StorageContainer",
+    "EquipmentManager",
+    "BankAccount",
+    "EquipmentSlot",
+    "ItemCategory",
+    
+    "InteractionSystem",
+    "RelationshipManager",
+    "ReputationManager",
+    "QuestManager",
+    "CharacterRelationship",
+    "RelationshipType",
+    "RelationshipEvent",
+    "FactionReputation",
+    "ReputationLevel",
+    "Quest",
+    "QuestObjective",
+    "QuestReward",
+    "QuestType",
+    "QuestStatus",
+    "QuestGenerator",
+    "InteractionType",
 ]
