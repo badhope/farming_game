@@ -13,6 +13,9 @@ class GameModeType(Enum):
     CLASSIC = "classic"
     ENDLESS = "endless"
     ADVENTURE = "adventure"
+    SURVIVAL = "survival"
+    BIOHAZARD = "biohazard"
+    HARDCORE = "hardcore"
 
 
 @dataclass
@@ -129,6 +132,134 @@ class GameModeManager:
                 "harder_weather": True
             },
             unlock_condition={"type": "level", "value": 3}
+        ),
+        GameModeType.SURVIVAL: ModeConfig(
+            mode_type=GameModeType.SURVIVAL,
+            name="🧟 生存模式",
+            description="在末日中生存！\n\n资源稀缺，感染者横行，\n每一天都是挑战。\n你能活多久？",
+            icon="🧟",
+            initial_money=100,
+            initial_plot_size=2,
+            has_time_limit=False,
+            time_limit_days=0,
+            has_objectives=True,
+            objectives=[
+                ModeObjective(
+                    objective_id="survive_30_days",
+                    description="存活30天",
+                    target_value=30,
+                    reward={"money": 1000, "exp": 500}
+                ),
+                ModeObjective(
+                    objective_id="kill_100_infected",
+                    description="消灭100个感染者",
+                    target_value=100,
+                    reward={"money": 2000, "exp": 800}
+                ),
+                ModeObjective(
+                    objective_id="build_safe_zone",
+                    description="建立安全区",
+                    target_value=1,
+                    reward={"money": 5000, "exp": 1500, "achievement": "survivor"}
+                ),
+            ],
+            modifiers={
+                "exp_multiplier": 2.0,
+                "money_multiplier": 0.5,
+                "growth_speed": 0.5,
+                "random_events": True,
+                "infection_spread": True,
+                "resource_scarce": True
+            },
+            unlock_condition={"type": "level", "value": 5}
+        ),
+        GameModeType.BIOHAZARD: ModeConfig(
+            mode_type=GameModeType.BIOHAZARD,
+            name="🦠 生化危机",
+            description="揭开病毒真相！\n\n完整体验生化世界观，\n探索剧情，寻找解药。\n拯救人类还是毁灭一切？",
+            icon="🦠",
+            initial_money=200,
+            initial_plot_size=3,
+            has_time_limit=True,
+            time_limit_days=100,
+            has_objectives=True,
+            objectives=[
+                ModeObjective(
+                    objective_id="discover_truth",
+                    description="发现病毒真相",
+                    target_value=1,
+                    reward={"exp": 1000}
+                ),
+                ModeObjective(
+                    objective_id="find_cure",
+                    description="找到解药配方",
+                    target_value=1,
+                    reward={"exp": 2000}
+                ),
+                ModeObjective(
+                    objective_id="save_survivors",
+                    description="拯救幸存者",
+                    target_value=10,
+                    reward={"money": 3000, "exp": 500}
+                ),
+                ModeObjective(
+                    objective_id="reach_zero_zone",
+                    description="到达零号区域",
+                    target_value=1,
+                    reward={"exp": 3000}
+                ),
+                ModeObjective(
+                    objective_id="complete_story",
+                    description="完成主线剧情",
+                    target_value=1,
+                    reward={"money": 10000, "exp": 5000, "achievement": "biohazard_master"}
+                ),
+            ],
+            modifiers={
+                "exp_multiplier": 2.5,
+                "money_multiplier": 1.0,
+                "growth_speed": 0.7,
+                "random_events": True,
+                "infection_spread": True,
+                "story_mode": True,
+                "karma_system": True
+            },
+            unlock_condition={"type": "level", "value": 8}
+        ),
+        GameModeType.HARDCORE: ModeConfig(
+            mode_type=GameModeType.HARDCORE,
+            name="💀 硬核模式",
+            description="只有一条命！\n\n死亡即永久结束，\n资源极度稀缺，\n敌人更加强大。\n真正的挑战！",
+            icon="💀",
+            initial_money=50,
+            initial_plot_size=2,
+            has_time_limit=False,
+            time_limit_days=0,
+            has_objectives=True,
+            objectives=[
+                ModeObjective(
+                    objective_id="survive_100_days",
+                    description="存活100天",
+                    target_value=100,
+                    reward={"achievement": "hardcore_survivor"}
+                ),
+                ModeObjective(
+                    objective_id="max_level",
+                    description="达到最高等级",
+                    target_value=20,
+                    reward={"achievement": "legend"}
+                ),
+            ],
+            modifiers={
+                "exp_multiplier": 3.0,
+                "money_multiplier": 0.3,
+                "growth_speed": 0.3,
+                "random_events": True,
+                "permadeath": True,
+                "enemy_stronger": 1.5,
+                "resource_very_scarce": True
+            },
+            unlock_condition={"type": "level", "value": 10}
         ),
     }
     

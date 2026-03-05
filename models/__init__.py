@@ -21,6 +21,9 @@ from models.soil import SoilQuality, FertilizerType, Fertilizer, SoilState, Fert
 from models.weather import WeatherType, WeatherEffect, WeatherAgricultureSystem, Season
 from models.color_system import ColorCustomizationSystem, ColorRegistry, ColorPalette, ColorCategory, CustomColor
 from models.branching_story import BranchingNarrativeSystem, StoryBranch, BranchNode, StoryChoice, Consequence, WorldState
+from models.biohazard_story import BiohazardStoryManager, WorldLore, StoryKeyPoint, CharacterMemory, InfectionLevel, FactionType
+from models.random_events import RandomEventManager, RandomEvent, RandomEventType, EventPriority
+from models.combat_system import CombatSystem, CharacterGrowthSystem, Weapon, Armor, Enemy, WeaponType, ArmorType, EnemyType, DamageType, SkillType
 
 
 __all__ = [
@@ -97,4 +100,24 @@ __all__ = [
     "StoryChoice",
     "Consequence",
     "WorldState",
+    "BiohazardStoryManager",
+    "WorldLore",
+    "StoryKeyPoint",
+    "CharacterMemory",
+    "InfectionLevel",
+    "FactionType",
+    "RandomEventManager",
+    "RandomEvent",
+    "RandomEventType",
+    "EventPriority",
+    "CombatSystem",
+    "CharacterGrowthSystem",
+    "Weapon",
+    "Armor",
+    "Enemy",
+    "WeaponType",
+    "ArmorType",
+    "EnemyType",
+    "DamageType",
+    "SkillType",
 ]
