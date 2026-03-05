@@ -370,23 +370,40 @@ class CharacterCreationDialog(tk.Toplevel):
         
         tk.Button(
             button_frame,
-            text="使用默认角色",
+            text="❌ 返回重选",
+            font=("微软雅黑", 10),
+            bg="#F44336",
+            fg="white",
+            relief=tk.FLAT,
+            cursor="hand2",
+            command=self._go_back
+        ).pack(side=tk.LEFT, padx=5)
+        
+        tk.Button(
+            button_frame,
+            text="🔄 使用默认",
             font=("微软雅黑", 10),
             bg="#9E9E9E",
             fg="white",
             relief=tk.FLAT,
+            cursor="hand2",
             command=self._use_default
         ).pack(side=tk.LEFT, padx=5)
         
         tk.Button(
             button_frame,
-            text="开始游戏",
+            text="✅ 确认选择",
             font=("微软雅黑", 11, "bold"),
             bg="#4CAF50",
             fg="white",
             relief=tk.FLAT,
+            cursor="hand2",
             command=self._confirm
         ).pack(side=tk.RIGHT, padx=5)
+    
+    def _go_back(self):
+        self.on_complete(None)
+        self.destroy()
     
     def _use_default(self):
         self.character_data = {
@@ -627,6 +644,20 @@ class EnhancedWelcomeScreen(tk.Frame):
             card.grid(row=0, column=i, padx=15, pady=10, sticky=tk.NSEW)
             
             modes_frame.columnconfigure(i, weight=1)
+        
+        back_btn_frame = tk.Frame(mode_window, bg="#F5F5F5")
+        back_btn_frame.pack(fill=tk.X, padx=30, pady=15)
+        
+        tk.Button(
+            back_btn_frame,
+            text="❌ 返回主菜单",
+            font=("微软雅黑", 11),
+            bg="#F44336",
+            fg="white",
+            relief=tk.FLAT,
+            cursor="hand2",
+            command=mode_window.destroy
+        ).pack(side=tk.RIGHT)
     
     def _on_mode_selected(self, mode_type: str, mode_window):
         self.selected_mode = mode_type
@@ -634,7 +665,9 @@ class EnhancedWelcomeScreen(tk.Frame):
         
         CharacterCreationDialog(self, self._on_character_created)
     
-    def _on_character_created(self, character_data: Dict):
+    def _on_character_created(self, character_data):
+        if character_data is None:
+            return
         self.character_data = character_data
         self.on_start_game(self.selected_mode, self.character_data)
     
@@ -694,15 +727,30 @@ class EnhancedWelcomeScreen(tk.Frame):
             bg="#F5F5F5"
         ).pack(anchor=tk.W, pady=5)
         
+        button_frame = tk.Frame(settings_window, bg="#F5F5F5")
+        button_frame.pack(fill=tk.X, padx=30, pady=20)
+        
         tk.Button(
-            settings_window,
-            text="保存设置",
+            button_frame,
+            text="❌ 取消",
+            font=("微软雅黑", 10),
+            bg="#F44336",
+            fg="white",
+            relief=tk.FLAT,
+            cursor="hand2",
+            command=settings_window.destroy
+        ).pack(side=tk.LEFT)
+        
+        tk.Button(
+            button_frame,
+            text="✅ 保存设置",
             font=("微软雅黑", 11),
             bg="#4CAF50",
             fg="white",
             relief=tk.FLAT,
+            cursor="hand2",
             command=settings_window.destroy
-        ).pack(pady=20)
+        ).pack(side=tk.RIGHT)
     
     def update_player_level(self, level: int):
         self.player_level = level

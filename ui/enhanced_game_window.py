@@ -759,6 +759,12 @@ class EnhancedGameWindow(tk.Frame):
         
         ttk.Button(btn_frame2, text="⏭️ 下一天", command=self._advance_day).pack(side=tk.LEFT, padx=2, expand=True, fill=tk.X)
         ttk.Button(btn_frame2, text="💾 保存", command=self._save_game).pack(side=tk.LEFT, padx=2, expand=True, fill=tk.X)
+        
+        btn_frame3 = ttk.Frame(quick_frame)
+        btn_frame3.pack(fill=tk.X, pady=2)
+        
+        ttk.Button(btn_frame3, text="🏠 返回主菜单", command=self._return_to_menu).pack(side=tk.LEFT, padx=2, expand=True, fill=tk.X)
+        ttk.Button(btn_frame3, text="🚪 退出游戏", command=self._exit_game).pack(side=tk.LEFT, padx=2, expand=True, fill=tk.X)
     
     def _create_message_log(self, parent):
         log_frame = ttk.LabelFrame(parent, text="📜 消息日志", padding=5)
@@ -918,12 +924,51 @@ class EnhancedGameWindow(tk.Frame):
     def _sell_selected_item(self):
         selection = self.inv_listbox.curselection()
         if not selection:
+            messagebox.showinfo("提示", "请先选择要出售的物品！")
             return
         
         item_text = self.inv_listbox.get(selection[0])
-        self._add_message(f"出售: {item_text}")
+        
+        result = messagebox.askyesno(
+            "确认出售",
+            f"确定要出售以下物品吗？\n\n{item_text}\n\n此操作不可撤销！"
+        )
+        
+        if result:
+            self._add_message(f"出售: {item_text}")
+    
+    def _return_to_menu(self):
+        result = messagebox.askyesno(
+            "返回主菜单",
+            "确定要返回主菜单吗？\n\n请确保已保存游戏进度！"
+        )
+        
+        if result:
+            self.on_return_to_menu()
+    
+    def _exit_game(self):
+        result = messagebox.askyesnocancel(
+            "退出游戏",
+            "确定要退出游戏吗？\n\n是否保存游戏进度？"
+        )
+        
+        if result is True:
+            self._save_game()
+            self.on_exit_game()
+        elif result is False:
+            self.on_exit_game()
     
     def _upgrade_home(self):
+        upgrade_cost = self.home_manager.home.get_upgrade_cost()
+        
+        result = messagebox.askyesno(
+            "确认升级",
+            f"确定要升级房屋吗？\n\n升级费用: {upgrade_cost} 金币\n当前金币: {self.game_manager.player.money} 金币"
+        )
+        
+        if not result:
+            return
+        
         success, msg = self.home_manager.upgrade_home(self.game_manager.player.money)
         if success:
             self.game_manager.player.spend_money(self.home_manager.home.get_upgrade_cost() // 2)

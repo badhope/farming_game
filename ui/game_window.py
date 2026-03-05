@@ -228,6 +228,22 @@ class GameWindow(tk.Frame):
             text="⏭️ 推进一天",
             command=self._advance_day
         ).pack(side=tk.LEFT, padx=(5, 0), fill=tk.X, expand=True)
+        
+        # 第三行按钮 - 返回和退出
+        button_frame3 = ttk.Frame(quick_frame)
+        button_frame3.pack(fill=tk.X, pady=(5, 0))
+        
+        ttk.Button(
+            button_frame3,
+            text="🏠 返回主菜单",
+            command=self._return_to_menu
+        ).pack(side=tk.LEFT, padx=(0, 5), fill=tk.X, expand=True)
+        
+        ttk.Button(
+            button_frame3,
+            text="🚪 退出游戏",
+            command=self._exit_game
+        ).pack(side=tk.LEFT, fill=tk.X, expand=True)
     
     def _create_detailed_menus(self, parent):
         """创建详细菜单区"""
@@ -779,3 +795,31 @@ class GameWindow(tk.Frame):
         self.game_manager.auto_run = self.auto_run_var.get()
         status = "开启" if self.game_manager.auto_run else "关闭"
         self._add_message(f"⚙️ 自动运行已{status}")
+    
+    def _return_to_menu(self):
+        """返回主菜单"""
+        result = messagebox.askyesno(
+            "返回主菜单",
+            "确定要返回主菜单吗？\n\n请确保已保存游戏进度！"
+        )
+        
+        if result:
+            self.on_return_to_menu()
+    
+    def _exit_game(self):
+        """退出游戏"""
+        result = messagebox.askyesnocancel(
+            "退出游戏",
+            "确定要退出游戏吗？\n\n是否保存游戏进度？"
+        )
+        
+        if result is True:
+            self._save_game()
+            self.on_exit_game()
+        elif result is False:
+            self.on_exit_game()
+    
+    def _save_game(self):
+        """保存游戏"""
+        self.save_manager.save_game(self.game_manager)
+        self._add_message("💾 游戏已保存！")
