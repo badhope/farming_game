@@ -1,0 +1,180 @@
+{
+  "crops": {
+    "potato": {
+      "name": "土豆",
+      "seed_price": 50,
+      "sell_price": 120,
+      "grow_days": 3,
+      "seasons": ["SPRING", "AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🥔",
+      "crop_type": "VEGETABLE",
+      "description": "常见蔬菜，生长周期短，适合新手。"
+    },
+    "carrot": {
+      "name": "胡萝卜",
+      "seed_price": 40,
+      "sell_price": 90,
+      "grow_days": 2,
+      "seasons": ["SPRING", "AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🥕",
+      "crop_type": "VEGETABLE",
+      "description": "生长最快的作物，收益稳定。"
+    },
+    "tomato": {
+      "name": "番茄",
+      "seed_price": 80,
+      "sell_price": 200,
+      "grow_days": 5,
+      "seasons": ["SUMMER"],
+      "water_needed": 2,
+      "emoji": "🍅",
+      "crop_type": "VEGETABLE",
+      "description": "夏季特产，需水量大，收益可观。"
+    },
+    "corn": {
+      "name": "玉米",
+      "seed_price": 100,
+      "sell_price": 250,
+      "grow_days": 6,
+      "seasons": ["SUMMER", "AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🌽",
+      "crop_type": "VEGETABLE",
+      "description": "适应性强，可在夏秋两季种植。"
+    },
+    "pumpkin": {
+      "name": "南瓜",
+      "seed_price": 120,
+      "sell_price": 320,
+      "grow_days": 7,
+      "seasons": ["AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🎃",
+      "crop_type": "VEGETABLE",
+      "description": "秋季代表作物，生长周期较长。"
+    },
+    "eggplant": {
+      "name": "茄子",
+      "seed_price": 70,
+      "sell_price": 180,
+      "grow_days": 4,
+      "seasons": ["AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🍆",
+      "crop_type": "VEGETABLE",
+      "description": "秋季蔬菜，性价比不错。"
+    },
+    "cabbage": {
+      "name": "白菜",
+      "seed_price": 30,
+      "sell_price": 70,
+      "grow_days": 3,
+      "seasons": ["SPRING", "AUTUMN", "WINTER"],
+      "water_needed": 1,
+      "emoji": "🥬",
+      "crop_type": "VEGETABLE",
+      "description": "适应性强，三季可种，价格便宜。"
+    },
+    "watermelon": {
+      "name": "西瓜",
+      "seed_price": 150,
+      "sell_price": 400,
+      "grow_days": 8,
+      "seasons": ["SUMMER"],
+      "water_needed": 2,
+      "emoji": "🍉",
+      "crop_type": "FRUIT",
+      "description": "夏季高价值水果，需水量大。"
+    },
+    "strawberry": {
+      "name": "草莓",
+      "seed_price": 200,
+      "sell_price": 500,
+      "grow_days": 10,
+      "seasons": ["SPRING"],
+      "water_needed": 2,
+      "emoji": "🍓",
+      "crop_type": "FRUIT",
+      "description": "春季珍品，价格昂贵，值得投资。"
+    },
+    "grape": {
+      "name": "葡萄",
+      "seed_price": 300,
+      "sell_price": 800,
+      "grow_days": 14,
+      "seasons": ["SUMMER", "AUTUMN"],
+      "water_needed": 2,
+      "emoji": "🍇",
+      "crop_type": "FRUIT",
+      "description": "高价值水果，生长周期长，收益最高。"
+    },
+    "wheat": {
+      "name": "小麦",
+      "seed_price": 20,
+      "sell_price": 50,
+      "grow_days": 4,
+      "seasons": ["SPRING", "SUMMER", "AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🌾",
+      "crop_type": "GRAIN",
+      "description": "最便宜的作物，三季可种，适合大规模种植。"
+    },
+    "sunflower": {
+      "name": "向日葵",
+      "seed_price": 250,
+      "sell_price": 600,
+      "grow_days": 12,
+      "seasons": ["SUMMER"],
+      "water_needed": 1,
+      "emoji": "🌻",
+      "crop_type": "FLOWER",
+      "description": "夏季花卉，高价值，装饰农场。"
+    },
+    "rose": {
+      "name": "玫瑰",
+      "seed_price": 300,
+      "sell_price": 700,
+      "grow_days": 10,
+      "seasons": ["SPRING", "SUMMER"],
+      "water_needed": 2,
+      "emoji": "🌹",
+      "crop_type": "FLOWER",
+      "description": "美丽的花卉，高价值，适合送礼。"
+    },
+    "tulip": {
+      "name": "郁金香",
+      "seed_price": 200,
+      "sell_price": 500,
+      "grow_days": 8,
+      "seasons": ["SPRING"],
+      "water_needed": 1,
+      "emoji": "🌷",
+      "crop_type": "FLOWER",
+      "description": "春季花卉，色彩鲜艳，装饰效果好。"
+    },
+    "radish": {
+      "name": "萝卜",
+      "seed_price": 60,
+      "sell_price": 150,
+      "grow_days": 4,
+      "seasons": ["WINTER"],
+      "water_needed": 1,
+      "emoji": "🥬",
+      "crop_type": "VEGETABLE",
+      "description": "冬季蔬菜，耐寒性强。"
+    },
+    "chinese_cabbage": {
+      "name": "大白菜",
+      "seed_price": 80,
+      "sell_price": 180,
+      "grow_days": 5,
+      "seasons": ["WINTER"],
+      "water_needed": 1,
+      "emoji": "🥬",
+      "crop_type": "VEGETABLE",
+      "description": "冬季主要蔬菜，营养丰富。"
+    }
+  }
+}

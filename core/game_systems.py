@@ -14,7 +14,6 @@ from models.soil import SoilManager, FertilizerType
 from models.weather import WeatherAgricultureSystem, WeatherType
 from models.level_system import LevelSystem
 from models.animal import AnimalManager, AnimalType
-from models.branching_story import BranchingNarrativeSystem
 from models.color_system import ColorCustomizationSystem
 from core.dynamics import (
     ProbabilityEngine, DamageCalculator, GrowthCalculator, 
@@ -86,7 +85,6 @@ class IntegratedGameSystem:
         self.weather_system = WeatherAgricultureSystem()
         self.level_system = LevelSystem()
         self.animal_manager = AnimalManager()
-        self.story_system = BranchingNarrativeSystem()
         self.color_system = ColorCustomizationSystem()
         
         self.stat_system = StatSystem()

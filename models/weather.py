@@ -5,27 +5,8 @@
 
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple
-from enum import Enum
 import random
-
-
-class WeatherType(Enum):
-    SUNNY = "sunny"
-    CLOUDY = "cloudy"
-    RAINY = "rainy"
-    STORMY = "stormy"
-    SNOWY = "snowy"
-    WINDY = "windy"
-    FOGGY = "foggy"
-    DROUGHT = "drought"
-    HEATWAVE = "heatwave"
-
-
-class Season(Enum):
-    SPRING = "spring"
-    SUMMER = "summer"
-    AUTUMN = "autumn"
-    WINTER = "winter"
+from config.enums import Season
 
 
 @dataclass

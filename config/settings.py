@@ -3,34 +3,8 @@
 包含所有游戏常量、作物数据、成就数据等
 """
 
-from enum import Enum
 from typing import List
-
-
-# ==================== 枚举定义 ====================
-
-class Season(Enum):
-    """季节枚举"""
-    SPRING = "春天"
-    SUMMER = "夏天"
-    AUTUMN = "秋天"
-    WINTER = "冬天"
-
-
-class Weather(Enum):
-    """天气枚举"""
-    SUNNY = "☀️ 晴天"
-    RAINY = "🌧️ 雨天"
-    CLOUDY = "☁️ 阴天"
-    STORMY = "⛈️ 暴风雨"
-
-
-class CropType(Enum):
-    """作物类型"""
-    VEGETABLE = "蔬菜"
-    FRUIT = "水果"
-    GRAIN = "谷物"
-    FLOWER = "花卉"
+from config.enums import Season, Weather, CropType
 
 
 # ==================== 游戏常量 ====================

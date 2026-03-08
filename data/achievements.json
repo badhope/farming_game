@@ -1,0 +1,64 @@
+{
+  "achievements": {
+    "first_harvest": {
+      "name": "🌾 初次收获",
+      "description": "收获第一个作物",
+      "condition": "harvest_count >= 1",
+      "reward_text": "开启你的农场之旅！"
+    },
+    "farmer_100": {
+      "name": "👨‍🌾 小农夫",
+      "description": "累计收获 100 个作物",
+      "condition": "harvest_count >= 100",
+      "reward_text": "你已经入门了！"
+    },
+    "farmer_500": {
+      "name": "🧑‍🌾 经验农夫",
+      "description": "累计收获 500 个作物",
+      "condition": "harvest_count >= 500",
+      "reward_text": "经验丰富的农夫！"
+    },
+    "farmer_1000": {
+      "name": "👨‍🌾 农场大师",
+      "description": "累计收获 1000 个作物",
+      "condition": "harvest_count >= 1000",
+      "reward_text": "传奇农夫诞生！"
+    },
+    "millionaire": {
+      "name": "💰 百万富翁",
+      "description": "累计赚取 1,000,000 金币",
+      "condition": "total_earnings >= 1000000",
+      "reward_text": "财富自由达成！"
+    },
+    "all_crops": {
+      "name": "🌱 作物收藏家",
+      "description": "种植过所有种类的作物（16 种）",
+      "condition": "crops_grown_count >= 16",
+      "reward_text": "全作物收藏达成！"
+    },
+    "survive_year": {
+      "name": "📅 度过四季",
+      "description": "经历过完整的四个季节",
+      "condition": "years_passed >= 1",
+      "reward_text": "四季轮回，生生不息！"
+    },
+    "storm_survivor": {
+      "name": "⛈️ 暴风雨幸存者",
+      "description": "在暴风雨中保住所有作物",
+      "condition": "storm_survived == True",
+      "reward_text": "风雨无阻！"
+    },
+    "max_farm": {
+      "name": "🏘️ 农场大亨",
+      "description": "将农场升级到最高等级",
+      "condition": "upgrade_level >= 4",
+      "reward_text": "顶级农场达成！"
+    },
+    "rich_harvest": {
+      "name": "🎃 丰收之王",
+      "description": "单日收获 10 个以上作物",
+      "condition": "single_day_harvest >= 10",
+      "reward_text": "大丰收！"
+    }
+  }
+}

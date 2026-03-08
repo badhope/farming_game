@@ -5,65 +5,11 @@
 
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Tuple, Set
-from enum import Enum
 import random
-
-
-class CropStage(Enum):
-    SEED = "种子"
-    SPROUT = "幼苗"
-    GROWING = "成长中"
-    MATURE = "成熟"
-    WITHERED = "枯萎"
-
-
-class CropQuality(Enum):
-    POOR = "劣质"
-    NORMAL = "普通"
-    GOOD = "优质"
-    EXCELLENT = "极品"
-    LEGENDARY = "传说"
-
-
-class Season(Enum):
-    SPRING = "春季"
-    SUMMER = "夏季"
-    AUTUMN = "秋季"
-    WINTER = "冬季"
-
-
-class BuildingType(Enum):
-    HOUSE = "住宅"
-    BARN = "畜棚"
-    SILO = "粮仓"
-    GREENHOUSE = "温室"
-    WELL = "水井"
-    FENCE = "围栏"
-    WORKSHOP = "工坊"
-    KITCHEN = "厨房"
-    STORAGE = "仓库"
-    SHOP = "商店"
-    DECORATION = "装饰"
-    FARM = "农田"
-
-
-class RecipeCategory(Enum):
-    MAIN_DISH = "主菜"
-    SOUP = "汤类"
-    DESSERT = "甜点"
-    DRINK = "饮品"
-    SNACK = "小食"
-    SPECIAL = "特色菜"
-
-
-class FoodEffectType(Enum):
-    HEALTH = "恢复生命"
-    STAMINA = "恢复体力"
-    BUFF_ATTACK = "攻击提升"
-    BUFF_DEFENSE = "防御提升"
-    BUFF_SPEED = "速度提升"
-    BUFF_LUCK = "幸运提升"
-    TEMP_REGEN = "持续恢复"
+from config.enums import (
+    Season, CropStage, CropQuality, BuildingType, 
+    RecipeCategory, FoodEffectType
+)
 
 
 @dataclass
