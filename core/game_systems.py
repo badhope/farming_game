@@ -11,7 +11,7 @@ from datetime import datetime
 
 from models.stamina import StaminaSystem, ActionType
 from models.soil import SoilManager, FertilizerType
-from models.weather import WeatherAgricultureSystem, WeatherType
+from models.weather import WeatherAgricultureSystem, Weather
 from models.level_system import LevelSystem
 from models.animal import AnimalManager, AnimalType
 from models.color_system import ColorCustomizationSystem

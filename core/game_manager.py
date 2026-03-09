@@ -14,6 +14,7 @@ from models import Crop, Plot, Player, PlayerStats, Achievement, AchievementMana
 from core.time_system import TimeSystem
 from core.economy import EconomySystem
 from core.event_system import EventSystem
+from ai import AIFarmAssistant, AIPlantingAdvisor, AIFarmAnalyzer
 
 
 @dataclass
@@ -45,6 +46,11 @@ class GameManager:
         self.economy_system = EconomySystem()
         self.achievement_manager = AchievementManager()
         self.event_system = EventSystem()  # 事件系统
+        
+        # AI 系统
+        self.ai_assistant = AIFarmAssistant()
+        self.ai_advisor = AIPlantingAdvisor()
+        self.ai_analyzer = AIFarmAnalyzer()
         
         # 玩家数据
         self.player = Player()
@@ -654,6 +660,76 @@ class GameManager:
             return self.advance_day()
         
         return None
+    
+    # ========== AI 功能 ==========
+    
+    def ai_chat(self, user_input: str) -> str:
+        """
+        与 AI 助手对话
+        
+        Args:
+            user_input: 用户输入
+            
+        Returns:
+            str: AI 回复
+        """
+        game_state = self._get_game_state_for_ai()
+        return self.ai_assistant.chat(user_input, game_state)
+    
+    def ai_get_planting_advice(self) -> Dict:
+        """
+        获取 AI 种植建议
+        
+        Returns:
+            Dict: 种植建议
+        """
+        season = self.time_system.season.value
+        days_remaining = GameConfig.DAYS_PER_SEASON - self.time_system.day
+        budget = self.player.money
+        
+        return self.ai_advisor.get_best_crop(season, days_remaining, budget)
+    
+    def ai_analyze_farm(self) -> Dict:
+        """
+        获取农场分析报告
+        
+        Returns:
+            Dict: 分析报告
+        """
+        game_state = self._get_game_state_for_ai()
+        return self.ai_analyzer.analyze_farm(game_state)
+    
+    def ai_get_detailed_report(self) -> str:
+        """
+        获取详细分析报告
+        
+        Returns:
+            str: 格式化报告
+        """
+        game_state = self._get_game_state_for_ai()
+        return self.ai_analyzer.get_detailed_report(game_state)
+    
+    def _get_game_state_for_ai(self) -> Dict:
+        """
+        获取用于 AI 分析的游戏状态
+        
+        Returns:
+            Dict: 游戏状态字典
+        """
+        # 获取已收获作物种类
+        harvested_crops = []
+        for achievement in self.achievement_manager.achievements:
+            if "crop" in achievement.id.lower():
+                harvested_crops.append(achievement.id)
+        
+        return {
+            "money": self.player.money,
+            "plots": self.plots,
+            "harvested_crops": harvested_crops,
+            "season": self.time_system.season.value,
+            "day": self.time_system.day,
+            "weather": self.time_system.weather.value,
+        }
     
     def __str__(self) -> str:
         return f"GameManager({self.get_current_date()})"

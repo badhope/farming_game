@@ -1,266 +1,284 @@
-# 🌟 星露谷物语 - 农场模拟器 🌟
+# 🌾 农场模拟器 - Web 版开发中
 
-![Version](https://img.shields.io/badge/version-2.1-blue.svg)
+![Version](https://img.shields.io/badge/version-4.0--dev-blue.svg)
 ![Python](https://img.shields.io/badge/python-3.8%2B-green.svg)
+![Node](https://img.shields.io/badge/node-18%2B-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-orange.svg)
-![Tests](https://img.shields.io/badge/tests-50%2B%20passing-brightgreen.svg)
 
-一款现代化的农场模拟游戏，体验田园生活的乐趣！经过全面重构，代码更清晰、更易维护。
+> **这是一个 AI 驱动的农场模拟游戏**，正在从桌面版迁移到 Web 平台。
+> 
+> **当前状态**: 🚧 开发中 (v4.0 Web 迁移)
 
-## 🎮 游戏特色
+---
 
-### 🌈 全新图形界面
-- **直观操作**: 鼠标点击替代繁琐的命令行输入
-- **实时反馈**: 动态更新的农田状态和作物生长进度
-- **美观界面**: 现代化 UI 设计，色彩丰富的视觉体验
+## ⚠️ 重要提示
 
-### 🌱 丰富游戏内容
-- **四季系统**: 春夏秋冬四个季节，每季有不同的适宜作物
-- **天气变化**: 晴天、雨天、暴风雨等多样天气影响 gameplay
-- **作物多样性**: 16 种不同作物，各有独特的生长特性和收益
-- **农场升级**: 从小农场逐步扩建，解锁更多土地
+**本项目正在进行 Web 化改造，尚未完成！**
 
-### 🏆 成就系统
-- **多样化成就**: 收获、财富、探索等各类成就
-- **进度追踪**: 实时显示成就完成进度
-- **奖励机制**: 解锁特殊奖励和称号
+当前版本只包含**后端 API 框架**和**前端基础架构**，核心游戏逻辑正在迁移中。
 
-### 💰 经济系统
-- **商店经营**: 购买种子，出售作物
-- **投资回报**: 计算作物利润率，制定最优种植策略
-- **财务管理**: 追踪收入支出，监控农场盈利状况
+---
 
-### 🛠️ 技术亮点（2026 重构版）
-- ✅ **模块化架构**: 清晰的职责分离
-- ✅ **配置驱动**: JSON 配置文件，支持热更新
-- ✅ **单元测试**: 50+ 测试用例，保证质量
-- ✅ **代码规范**: 统一枚举、类型注解、文档完整
+## 📋 开发进度
 
-## 🚀 快速开始
+### ✅ 已完成 (v3.0 - 2026.03.10)
 
-### 系统要求
-- Python 3.8 或更高版本
-- Windows/Linux/macOS 操作系统
+#### 1. 代码清理和重构
+- ✅ 删除 Tkinter GUI 相关代码（ui/ 目录）
+- ✅ 删除冗余系统（systems/, demos/, audio/ 目录）
+- ✅ 简化 models 模块，移除不必要的模块
+- ✅ 优化项目结构，为 Web API 做准备
 
-### 安装步骤
+#### 2. FastAPI 后端架构
+- ✅ 创建 FastAPI 应用框架
+- ✅ 配置 CORS 中间件
+- ✅ 创建 API 路由骨架：
+  - `/api/farm` - 农场管理
+  - `/api/player` - 玩家数据
+  - `/api/ai` - AI 功能
+  - `/api/game` - 游戏控制
+- ✅ 创建 Pydantic Schemas
+- ✅ 配置 SQLite 数据库（SQLAlchemy）
+- ✅ 创建数据库模型
 
-1. **克隆项目**
-```bash
-git clone https://github.com/yourusername/farming_game.git
-cd farming_game
-```
+#### 3. React 前端架构
+- ✅ 使用 Vite 创建 React + TypeScript 项目
+- ✅ 安装核心依赖：
+  - Ant Design (UI 组件库)
+  - React Router (路由)
+  - Axios (HTTP 客户端)
+  - Recharts (图表)
+  - Framer Motion (动画)
+  - React Hot Toast (通知)
 
-2. **安装依赖**
-```bash
-pip install -r requirements.txt
-```
+#### 4. 项目文档
+- ✅ 更新 requirements.txt
+- ✅ 创建基础启动脚本
 
-3. **启动游戏**
-```bash
-# 图形界面模式（推荐）
-python main.py
+---
 
-# 或指定模式
-python main.py --mode gui
+### 🚧 进行中 (v4.0 - 当前阶段)
 
-# 控制台模式（兼容旧版本）
-python main.py --mode console
-```
+#### 待完成的后端功能
+- [ ] 实现农场管理 API 的具体逻辑
+- [ ] 实现玩家数据 API 的具体逻辑
+- [ ] 实现游戏控制 API 的具体逻辑
+- [ ] 集成现有的 AI 系统（ai_assistant, ai_advisor, ai_analyzer）
+- [ ] 实现存档/读档功能
+- [ ] 实现游戏时间推进逻辑
+- [ ] 添加用户认证和授权
+- [ ] 添加 API 单元测试
 
-4. **运行测试**
-```bash
-# 运行所有单元测试
-python run_tests.py
+#### 待完成的前端功能
+- [ ] 创建游戏主界面组件
+- [ ] 实现农田渲染和交互
+- [ ] 实现种植、浇水、收获功能
+- [ ] 创建玩家信息面板
+- [ ] 创建背包界面
+- [ ] 实现 AI 助手对话框
+- [ ] 实现种植建议界面
+- [ ] 实现农场分析图表
+- [ ] 添加响应式设计支持
 
-# 或使用 pytest
-pytest
-```
+#### 待完成的部署配置
+- [ ] 创建 Dockerfile（后端）
+- [ ] 创建 Dockerfile（前端）
+- [ ] 创建 docker-compose.yml
+- [ ] 配置 Nginx 反向代理
+- [ ] 编写部署文档
 
-## 🎯 游戏玩法
+---
 
-### 基础操作
-1. **种植作物**: 点击空地 → 选择种子 → 确认种植
-2. **日常护理**: 点击【全部浇水】或单独给作物浇水
-3. **收获作物**: 点击成熟作物（带✨标志）直接收获
-4. **推进时间**: 点击睡眠按钮进入下一天
+### 📅 计划中 (未来版本)
 
-### 经营策略
-- **季节规划**: 根据季节选择最适合的作物
-- **资金管理**: 平衡种子投资和作物销售
-- **风险控制**: 关注天气预报，防范暴风雨损失
-- **规模扩张**: 积累资金升级农场获得更多土地
+#### v4.1 - 核心玩法
+- [ ] 完整的种植系统
+- [ ] 天气影响系统
+- [ ] 经济系统平衡
+- [ ] 成就系统实现
+- [ ] 任务系统实现
 
-## �️ 技术架构
+#### v4.2 - 社交功能
+- [ ] 用户注册/登录
+- [ ] 访问其他玩家农场
+- [ ] 排行榜系统
+- [ ] 成就分享
 
-### 项目结构（重构后）
+#### v4.3 - 移动端适配
+- [ ] 响应式布局优化
+- [ ] 触摸手势支持
+- [ ] PWA 支持
+
+---
+
+## 🏗️ 技术架构
+
+### 后端技术栈
+- **框架**: FastAPI
+- **语言**: Python 3.8+
+- **数据库**: SQLite (开发) / PostgreSQL (生产)
+- **ORM**: SQLAlchemy
+- **数据验证**: Pydantic
+- **AI 功能**: 规则引擎 (可接入 LLM)
+
+### 前端技术栈
+- **框架**: React 18 + TypeScript
+- **构建工具**: Vite
+- **UI 库**: Ant Design
+- **路由**: React Router
+- **状态管理**: React Context (或未来迁移到 Zustand)
+- **图表**: Recharts
+- **动画**: Framer Motion
+- **HTTP**: Axios
+
+### 部署方案
+- **容器化**: Docker + Docker Compose
+- **反向代理**: Nginx
+- **后端服务**: Uvicorn
+- **前端服务**: Nginx 静态文件服务
+
+---
+
+## 📁 项目结构
+
 ```
 farming_game/
-├── ui/                     # 图形界面模块
-│   ├── gui_main.py         # 主界面入口
-│   ├── welcome_screen.py   # 欢迎界面
-│   └── game_window.py      # 游戏主窗口
-├── controllers/            # 控制器层
-│   └── game_controller.py  # 游戏逻辑控制器
-├── models/                 # 数据模型层
-│   ├── farming_system.py   # 🆕 农耕系统
-│   ├── building_system.py  # 🆕 建筑系统
-│   ├── cooking_system.py   # 🆕 烹饪系统
-│   ├── inventory_system_simple.py  # 🆕 简化背包
-│   ├── player.py           # 玩家模型
-│   ├── crop.py             # 作物模型
-│   └── plot.py             # 地块模型
-├── config/                 # 配置层
-│   ├── enums.py            # 🆕 统一枚举定义
-│   ├── config_loader.py    # 🆕 JSON 配置加载器
-│   └── settings.py         # 游戏配置
-├── data/                   # 🆕 配置数据
-│   ├── crops.json          # 作物配置
-│   └── achievements.json   # 成就配置
-├── core/                   # 核心逻辑
-│   ├── game_manager.py     # 游戏管理器
-│   ├── economy.py          # 经济系统
-│   └── time_system.py      # 时间系统
-├── tests/                  # 🆕 单元测试
-│   ├── test_farming_system.py
-│   └── test_config_loader.py
-├── audio/                  # 音频系统
-│   └── sound_manager.py    # 音效管理器
-├── systems/                # 系统模块
-│   ├── tutorial.py         # 新手引导
-│   └── event_system.py     # 事件系统
-├── main.py                 # 程序入口
-├── run_tests.py            # 🆕 测试运行脚本
-├── pytest.ini              # 🆕 pytest 配置
-└── REFACTOR_PROGRESS.md    # 🆕 重构进度报告
+├── backend/              # FastAPI 后端
+│   ├── api/             # API 路由
+│   │   ├── farm.py      # 农场管理
+│   │   ├── player.py    # 玩家数据
+│   │   ├── ai.py        # AI 功能
+│   │   └── game.py      # 游戏控制
+│   ├── database/        # 数据库配置
+│   │   ├── db_config.py
+│   │   └── init_db.py
+│   ├── models/          # 数据库模型
+│   │   └── db_models.py
+│   ├── schemas/         # Pydantic Schemas
+│   ├── services/        # 业务逻辑层
+│   └── main.py          # FastAPI 应用入口
+├── frontend/            # React 前端
+│   ├── src/
+│   │   ├── components/  # React 组件
+│   │   ├── pages/       # 页面组件
+│   │   ├── api/         # API 调用
+│   │   ├── hooks/       # 自定义 Hooks
+│   │   ├── store/       # 状态管理
+│   │   └── App.tsx      # 应用入口
+│   └── package.json
+├── core/                # 核心游戏逻辑 (待迁移)
+│   ├── game_manager.py
+│   ├── time_system.py
+│   └── economy.py
+├── models/              # 数据模型 (待迁移)
+├── ai/                  # AI 系统 (待集成)
+├── config/              # 配置文件
+├── data/                # 游戏数据 (JSON)
+├── tests/               # 测试文件
+├── requirements.txt     # Python 依赖
+├── start_backend.py     # 后端启动脚本
+└── README.md            # 本文档
 ```
 
-### 核心架构改进
+---
 
-#### 1. 配置驱动设计
-```python
-# 从 JSON 加载配置，而非硬编码
-from config.config_loader import get_crop_config
+## 🚀 开发环境搭建
 
-potato = get_crop_config("potato")
-# 支持热更新，无需修改代码
+### 后端开发
+
+```bash
+# 1. 安装 Python 依赖
+pip install -r requirements.txt
+
+# 2. 初始化数据库
+python backend/database/init_db.py
+
+# 3. 启动后端服务器
+python start_backend.py
+
+# 访问 API 文档
+# http://localhost:8000/api/docs
 ```
 
-#### 2. 统一枚举管理
-```python
-# 所有枚举集中定义在 config/enums.py
-from config.enums import Season, CropType, Weather
+### 前端开发
 
-# 避免重复定义，统一使用英文
+```bash
+# 1. 进入前端目录
+cd frontend
+
+# 2. 安装依赖 (已完成)
+npm install
+
+# 3. 启动开发服务器
+npm run dev
+
+# 访问前端
+# http://localhost:5173
 ```
 
-#### 3. 模块化系统
-```python
-# 每个系统职责单一，易于维护
-from models.farming_system import FarmingManager
-from models.building_system import BuildingManager
-from models.cooking_system import CookingManager
-```
+---
 
-#### 4. 测试保障
-```python
-# 50+ 测试用例覆盖核心功能
-# 运行测试：python run_tests.py
-```
+## 🎮 当前可用的功能
 
-## 📊 重构成果（2026）
+### 后端 API
+- ✅ 健康检查：`GET /api/health`
+- ✅ API 文档：`GET /api/docs`
+- ⚠️ 农场管理：基础框架（未实现具体逻辑）
+- ⚠️ 玩家数据：基础框架（未实现具体逻辑）
+- ⚠️ AI 功能：基础框架（未实现具体逻辑）
+- ⚠️ 游戏控制：基础框架（未实现具体逻辑）
 
-本次重构解决了以下核心问题：
+### 前端
+- ✅ Vite + React + TypeScript 项目框架
+- ✅ Ant Design UI 库集成
+- ⚠️ 游戏界面：待开发
 
-| 指标 | 重构前 | 重构后 | 改善 |
-|------|--------|--------|------|
-| 代码行数 | ~8000 | ~6500 | **-19%** |
-| 重复枚举 | 3 处 | 1 处 | **-67%** |
-| 硬编码配置 | 100% | 50% | **-50%** |
-| 巨型类 | 1 个 | 0 个 | **-100%** |
-| 死代码 | 2500 行 | 0 行 | **-100%** |
-| 测试用例 | 0 个 | 50+ 个 | **+∞** |
+---
 
-### 删除的系统
-- ❌ 生化危机战斗系统（与农场无关）
-- ❌ MMORPG 装备系统（过度设计）
-- ❌ 分支剧情系统（功能冗余）
+## 📝 下一步工作
 
-### 新增的系统
-- ✅ 农耕系统（独立模块）
-- ✅ 建筑系统（独立模块）
-- ✅ 烹饪系统（独立模块）
-- ✅ 配置加载器（JSON 驱动）
-- ✅ 单元测试框架
+### 立即可做
+1. **实现后端 API 逻辑** - 将现有 Python 游戏逻辑迁移到 FastAPI
+2. **开发前端界面** - 创建游戏主界面和基础交互
+3. **前后端联调** - 测试 API 和 UI 集成
+
+### 优先级排序
+1. 🔴 **高优先级**: 后端农场管理 API 实现
+2. 🔴 **高优先级**: 前端游戏主界面开发
+3. 🟡 **中优先级**: 后端游戏逻辑迁移
+4. 🟡 **中优先级**: Docker 容器化配置
+5. 🟢 **低优先级**: 移动端适配
+
+---
 
 ## 🤝 贡献指南
 
-欢迎任何形式的贡献！
+如果你想参与开发：
 
-### 开发环境搭建
-```bash
-# 克隆项目
-git clone https://github.com/yourusername/farming_game.git
-cd farming_game
-
-# 安装开发依赖
-pip install pytest mypy black flake8
-
-# 运行测试
-pytest
-
-# 代码检查
-mypy .
-flake8 .
-```
-
-### 贡献流程
-1. Fork 项目
+1. Fork 本仓库
 2. 创建功能分支 (`git checkout -b feature/AmazingFeature`)
 3. 提交更改 (`git commit -m 'Add some AmazingFeature'`)
 4. 推送到分支 (`git push origin feature/AmazingFeature`)
 5. 开启 Pull Request
 
-## 📝 版本历史
-
-### v2.1 (2026 重构版) - 当前版本
-- ✨ 全面重构代码架构
-- 🗑️ 删除 2500 行死代码
-- 🧪 添加 50+ 单元测试
-- 📝 配置驱动设计（JSON）
-- 🏗️ 拆分巨型类为独立模块
-- 📚 统一枚举定义
-
-### v2.0
-- ✨ 全新图形界面
-- 🎓 新手引导系统
-- 🎵 音效系统
-- 🎪 随机事件系统
-
-### v1.0
-- 📝 基础控制台版本
-- 🌱 简单种植系统
-- 💰 基础经济系统
-
-## 📚 开发资源
-
-- [重构进度报告](REFACTOR_PROGRESS.md) - 详细的重构文档
-- [运行测试](run_tests.py) - 测试运行脚本
-- [pytest 配置](pytest.ini) - 测试配置
+---
 
 ## 📄 许可证
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情
-
-## 🙏 致谢
-
-特别感谢：
-- Python 社区的强大支持
-- Tkinter 提供的 GUI 框架
-- 所有贡献者的宝贵建议
-- 2026 年重构团队的努力
+MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ---
 
-🎮 **开始你的农场之旅吧！** 🎮
+## 📞 联系方式
 
-有任何问题或建议？欢迎提交 Issue 或联系开发者！
+- **项目状态**: 开发中
+- **最后更新**: 2026-03-10
+- **当前版本**: v4.0-dev
+
+---
+
+## 🙏 致谢
+
+感谢所有参与开发的贡献者！
+
+**注意**: 这是一个个人学习项目，主要用于技术实验和农业知识学习。

@@ -24,6 +24,11 @@ class Weather(Enum):
     RAINY = "雨天"
     CLOUDY = "阴天"
     STORMY = "暴风雨"
+    SNOWY = "下雪"
+    WINDY = "大风"
+    FOGGY = "大雾"
+    DROUGHT = "干旱"
+    HEATWAVE = "热浪"
 
 
 # ==================== 作物类型 ====================
