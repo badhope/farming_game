@@ -85,6 +85,21 @@ class ApiClient {
     return response.data;
   }
 
+  async getTimeStatus(): Promise<{
+    year: number;
+    day: number;
+    season: string;
+    weather: string;
+    tomorrow_weather: string | null;
+    date_string: string;
+    season_progress: number;
+    year_progress: number;
+    total_days: number;
+  }> {
+    const response = await this.client.get('/farm/time');
+    return response.data;
+  }
+
   async plantCrop(row: number, col: number, cropName: string): Promise<PlantResponse> {
     const response = await this.client.post<PlantResponse>('/farm/plant', {
       row,

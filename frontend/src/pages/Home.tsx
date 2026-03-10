@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Input, Button, Typography, Space, message, Segmented } from 'antd';
-import { PlayCircleOutlined, CloudOutlined, TrophyOutlined, ThunderboltOutlined, FlagOutlined } from '@ant-design/icons';
+import { PlayCircleOutlined, CloudOutlined, TrophyOutlined, ThunderboltOutlined, FlagOutlined, SunOutlined } from '@ant-design/icons';
 import { useGame } from '../store/GameContext';
 import styles from './Home.module.css';
 
@@ -22,9 +22,9 @@ const Home: React.FC = () => {
 
   const getDifficultyInfo = (diff: string) => {
     const info: Record<string, { money: string; stamina: string; desc: string }> = {
-      easy: { money: '1000', stamina: '150', desc: '作物生长快，金币多，暴风雨少' },
-      normal: { money: '500', stamina: '100', desc: '标准难度' },
-      hard: { money: '200', stamina: '80', desc: '作物生长慢，金币少，暴风雨多' },
+      easy: { money: '1000', stamina: '150', desc: '作物生长快，金币多，暴风雨少，适合休闲玩家' },
+      normal: { money: '500', stamina: '100', desc: '标准难度体验，考验你的经营策略' },
+      hard: { money: '200', stamina: '80', desc: '极具挑战性，老玩家专用' },
     };
     return info[diff] || info.normal;
   };
@@ -46,12 +46,10 @@ const Home: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.background}>
-        <div className={styles.cloud1}>
-          <CloudOutlined />
-        </div>
-        <div className={styles.cloud2}>
-          <CloudOutlined />
-        </div>
+        <div className={styles.sun}><SunOutlined /></div>
+        <div className={styles.cloud1}><CloudOutlined /></div>
+        <div className={styles.cloud2}><CloudOutlined /></div>
+        <div className={styles.cloud3}><CloudOutlined /></div>
       </div>
       
       <Card className={styles.card} bordered={false}>
@@ -64,7 +62,7 @@ const Home: React.FC = () => {
         <div className={styles.form}>
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
             <div>
-              <Text strong>输入你的名字</Text>
+              <Text strong style={{ fontSize: 15 }}>输入你的名字</Text>
               <Input
                 size="large"
                 placeholder="农夫"
@@ -77,7 +75,7 @@ const Home: React.FC = () => {
             </div>
 
             <div>
-              <Text strong><FlagOutlined /> 选择难度</Text>
+              <Text strong style={{ fontSize: 15 }}><FlagOutlined /> 选择难度</Text>
               <Segmented
                 value={difficulty}
                 onChange={(val) => setDifficulty(val as string)}
@@ -85,14 +83,21 @@ const Home: React.FC = () => {
                 block
                 className={styles.difficultySelector}
               />
-              <div style={{ marginTop: 8, padding: '8px 12px', background: '#f5f5f5', borderRadius: 6 }}>
-                <Space>
-                  <Text><ThunderboltOutlined /> 初始金币: {getDifficultyInfo(difficulty).money}</Text>
-                  <Text><TrophyOutlined /> 初始体力: {getDifficultyInfo(difficulty).stamina}</Text>
-                </Space>
-                <div style={{ marginTop: 4 }}>
-                  <Text type="secondary">{getDifficultyInfo(difficulty).desc}</Text>
+              <div className={styles.difficultyInfo}>
+                <span className={styles.difficultyInfoTitle}>{difficulties.find(d => d.value === difficulty)?.label} 模式</span>
+                <div className={styles.stats}>
+                  <div className={styles.stat}>
+                    <ThunderboltOutlined style={{ color: '#52c41a' }} />
+                    <span className={styles.statLabel}>初始金币:</span>
+                    <span className={styles.statValue}>{getDifficultyInfo(difficulty).money}</span>
+                  </div>
+                  <div className={styles.stat}>
+                    <TrophyOutlined style={{ color: '#52c41a' }} />
+                    <span className={styles.statLabel}>初始体力:</span>
+                    <span className={styles.statValue}>{getDifficultyInfo(difficulty).stamina}</span>
+                  </div>
                 </div>
+                <div className={styles.description}>{getDifficultyInfo(difficulty).desc}</div>
               </div>
             </div>
 
@@ -113,6 +118,7 @@ const Home: React.FC = () => {
                 size="large"
                 onClick={() => navigate('/game/farm')}
                 block
+                className={styles.continueButton}
               >
                 继续游戏
               </Button>
@@ -121,9 +127,10 @@ const Home: React.FC = () => {
         </div>
 
         <div className={styles.features}>
-          <Text type="secondary">
-            🌱 种植作物 &nbsp; 💧 浇水施肥 &nbsp; 🌾 收获出售 &nbsp; 🤖 AI 助手
-          </Text>
+          <span className={styles.feature}>🌱 种植作物</span>
+          <span className={styles.feature}>💧 浇水施肥</span>
+          <span className={styles.feature}>🌾 收获出售</span>
+          <span className={styles.feature}>🤖 AI 助手</span>
         </div>
       </Card>
     </div>

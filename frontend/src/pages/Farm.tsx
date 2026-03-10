@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Button, Space, Typography, message, Modal, Grid, Spin, Empty } from 'antd';
-import { ThunderboltOutlined } from '@ant-design/icons';
+import { Card, Button, Space, Typography, message, Modal, Grid, Spin, Empty, Progress } from 'antd';
+import { ThunderboltOutlined, CalendarOutlined, CloudOutlined, SunOutlined, CloudRainOutlined, ThunderboltOutlined as StormOutlined } from '@ant-design/icons';
 import { useGame } from '../store/GameContext';
 import { apiClient } from '../api/client';
 import styles from './Farm.module.css';
@@ -30,6 +30,36 @@ interface CropOption {
   description?: string;
 }
 
+interface TimeStatus {
+  year: number;
+  day: number;
+  season: string;
+  weather: string;
+  tomorrow_weather: string | null;
+  date_string: string;
+  season_progress: number;
+  year_progress: number;
+  total_days: number;
+}
+
+const seasonEmojis: Record<string, string> = {
+  '春': '🌸',
+  '夏': '☀️',
+  '秋': '🍂',
+  '冬': '❄️',
+};
+
+const weatherEmojis: Record<string, React.ReactNode> = {
+  '晴天': <SunOutlined style={{ color: '#faad14' }} />,
+  '多云': <CloudOutlined style={{ color: '#8c8c8c' }} />,
+  '雨天': <CloudRainOutlined style={{ color: '#1890ff' }} />,
+  '暴风雨': <StormOutlined style={{ color: '#722ed1' }} />,
+  'sunny': <SunOutlined style={{ color: '#faad14' }} />,
+  'cloudy': <CloudOutlined style={{ color: '#8c8c8c' }} />,
+  'rainy': <CloudRainOutlined style={{ color: '#1890ff' }} />,
+  'stormy': <StormOutlined style={{ color: '#722ed1' }} />,
+};
+
 const Farm: React.FC = () => {
   const { state, plantCrop, waterCrop, harvestCrop, advanceDay } = useGame();
   const [plots, setPlots] = useState<PlotData[]>([]);
@@ -39,6 +69,7 @@ const Farm: React.FC = () => {
   const [plantModalVisible, setPlantModalVisible] = useState(false);
   const [selectedPlot, setSelectedPlot] = useState<{ row: number; col: number } | null>(null);
   const [hasGame, setHasGame] = useState(true);
+  const [timeStatus, setTimeStatus] = useState<TimeStatus | null>(null);
   const screens = useBreakpoint();
 
   useEffect(() => {
@@ -53,17 +84,20 @@ const Farm: React.FC = () => {
         setHasGame(false);
         setPlots([]);
         setCrops([]);
+        setTimeStatus(null);
         setPlanting(false);
         return;
       }
       setHasGame(true);
       
-      const [plotsData, cropsData] = await Promise.all([
+      const [plotsData, cropsData, timeData] = await Promise.all([
         apiClient.getPlots(),
         apiClient.getCrops(),
+        apiClient.getTimeStatus(),
       ]);
       setPlots(plotsData);
       setCrops(cropsData);
+      setTimeStatus(timeData);
     } catch (error: any) {
       console.error('加载数据失败:', error);
       if (error.response?.status === 400) {
@@ -156,10 +190,45 @@ const Farm: React.FC = () => {
 
   return (
     <div className={styles.container}>
+      {timeStatus && (
+        <div className={styles.timePanel}>
+          <div className={styles.timeMain}>
+            <span className={styles.seasonEmoji}>{seasonEmojis[timeStatus.season] || '🌸'}</span>
+            <span className={styles.dateText}>{timeStatus.date_string}</span>
+          </div>
+          <div className={styles.weatherInfo}>
+            <span className={styles.weatherCurrent}>
+              {weatherEmojis[timeStatus.weather] || <SunOutlined />}
+              <span>{timeStatus.weather}</span>
+            </span>
+            <span className={styles.weatherTomorrow}>
+              明天: {timeStatus.tomorrow_weather ? (
+                <>
+                  {weatherEmojis[timeStatus.tomorrow_weather] || <SunOutlined />}
+                  <span>{timeStatus.tomorrow_weather}</span>
+                </>
+              ) : '-'}
+            </span>
+          </div>
+          <div className={styles.progressInfo}>
+            <div className={styles.progressItem}>
+              <span className={styles.progressLabel}>季节</span>
+              <Progress 
+                percent={Math.round(timeStatus.season_progress * 100)} 
+                size="small" 
+                showInfo={false}
+                strokeColor="#52c41a"
+                className={styles.progressBar}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      
       <Card className={styles.controls}>
         <Space wrap>
           <Button
-            type="primary"
+            className={styles.advanceButton}
             icon={<ThunderboltOutlined />}
             onClick={handleAdvanceDay}
             loading={loading}

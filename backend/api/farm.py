@@ -117,3 +117,23 @@ async def get_available_crops() -> List[Dict[str, Any]]:
         raise HTTPException(status_code=400, detail="没有进行中的游戏")
     
     return game_service.get_available_crops()
+
+
+@router.get("/time")
+async def get_time_status() -> Dict[str, Any]:
+    """获取时间和天气状态"""
+    if not game_service.has_active_game():
+        raise HTTPException(status_code=400, detail="没有进行中的游戏")
+    
+    gm = game_service.get_current_game()
+    return {
+        "year": gm.time_system.year,
+        "day": gm.time_system.day,
+        "season": gm.time_system.season.value,
+        "weather": gm.time_system.weather.value,
+        "tomorrow_weather": gm.time_system.tomorrow_weather.value if gm.time_system.tomorrow_weather else None,
+        "date_string": gm.time_system.get_date_string(),
+        "season_progress": gm.time_system.get_season_progress(),
+        "year_progress": gm.time_system.get_year_progress(),
+        "total_days": gm.time_system.get_total_days(),
+    }
