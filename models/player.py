@@ -71,6 +71,10 @@ class Player:
     """
     name: str = "农夫"
     money: int = GameConfig.INITIAL_MONEY
+    level: int = 1
+    exp: int = 0
+    stamina: int = 100
+    max_stamina: int = 100
     inventory: Dict[str, int] = field(default_factory=dict)
     seeds: Dict[str, int] = field(default_factory=dict)
     stats: PlayerStats = field(default_factory=PlayerStats)

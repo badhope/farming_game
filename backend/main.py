@@ -6,7 +6,7 @@ FastAPI 主应用
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.api import farm, player, ai, game
+from backend.api import farm, player, ai, game, shop
 
 
 def create_app() -> FastAPI:
@@ -26,6 +26,8 @@ def create_app() -> FastAPI:
         allow_origins=[
             "http://localhost:3000",  # React 开发服务器
             "http://127.0.0.1:3000",
+            "http://localhost:5173",  # Vite 开发服务器
+            "http://127.0.0.1:5173",
         ],
         allow_credentials=True,
         allow_methods=["*"],
@@ -37,6 +39,7 @@ def create_app() -> FastAPI:
     app.include_router(player.router, prefix="/api/player", tags=["玩家数据"])
     app.include_router(ai.router, prefix="/api/ai", tags=["AI 功能"])
     app.include_router(game.router, prefix="/api/game", tags=["游戏控制"])
+    app.include_router(shop.router, prefix="/api/shop", tags=["商店"])
     
     @app.get("/api/health", tags=["健康检查"])
     async def health_check():

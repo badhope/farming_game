@@ -4,69 +4,116 @@
 """
 
 from fastapi import APIRouter, HTTPException
-from typing import List, Dict
+from typing import List, Dict, Any
 from pydantic import BaseModel
+
+from backend.services.game_session import game_service
 
 router = APIRouter()
 
 
 # ============ Schema 定义 ============
 
-class PlotInfo(BaseModel):
-    """农田信息"""
+class PlantRequest(BaseModel):
+    """种植请求"""
     row: int
     col: int
-    has_crop: bool
-    crop_type: str | None = None
-    growth_stage: int = 0
-    needs_water: bool = False
+    crop_name: str
 
 
-class FarmAction(BaseModel):
-    """农场操作"""
-    action: str  # "plant", "water", "harvest", "clear"
+class WaterRequest(BaseModel):
+    """浇水请求"""
     row: int
     col: int
-    crop_type: str | None = None
+
+
+class HarvestRequest(BaseModel):
+    """收获请求"""
+    row: int
+    col: int
+
+
+class ClearRequest(BaseModel):
+    """清空地块请求"""
+    row: int
+    col: int
 
 
 # ============ API 端点 ============
 
 @router.get("/status")
-async def get_farm_status():
+async def get_farm_status() -> Dict[str, Any]:
     """获取农场状态"""
-    # TODO: 实现农场状态获取
+    if not game_service.has_active_game():
+        return {
+            "has_game": False,
+            "message": "没有进行中的游戏",
+        }
+    
+    state = game_service._get_game_state()
     return {
-        "plots": [],
-        "season": "spring",
-        "day": 1,
-        "weather": "sunny",
+        "has_game": True,
+        "season": state.season,
+        "day": state.day,
+        "year": state.year,
+        "weather": state.weather,
     }
 
 
 @router.get("/plots")
-async def get_plots() -> List[PlotInfo]:
+async def get_plots() -> List[Dict[str, Any]]:
     """获取所有农田信息"""
-    # TODO: 实现农田数据获取
-    return []
+    if not game_service.has_active_game():
+        raise HTTPException(status_code=400, detail="没有进行中的游戏")
+    
+    plots = game_service.get_farm_plots()
+    return [plot.__dict__ for plot in plots]
 
 
-@router.post("/action")
-async def perform_action(action: FarmAction):
-    """执行农场操作"""
-    # TODO: 实现农场操作逻辑
-    return {"success": True, "message": f"执行操作：{action.action}"}
+@router.post("/plant")
+async def plant_crop(request: PlantRequest) -> Dict[str, Any]:
+    """种植作物"""
+    if not game_service.has_active_game():
+        return {"success": False, "message": "没有进行中的游戏，请先创建新游戏"}
+    
+    result = game_service.plant_crop(request.row, request.col, request.crop_name)
+    return result
+
+
+@router.post("/water")
+async def water_crop(request: WaterRequest) -> Dict[str, Any]:
+    """浇水"""
+    if not game_service.has_active_game():
+        return {"success": False, "message": "没有进行中的游戏"}
+    
+    result = game_service.water_crop(request.row, request.col)
+    return result
+
+
+@router.post("/harvest")
+async def harvest_crop(request: HarvestRequest) -> Dict[str, Any]:
+    """收获作物"""
+    if not game_service.has_active_game():
+        return {"success": False, "message": "没有进行中的游戏"}
+    
+    result = game_service.harvest_crop(request.row, request.col)
+    return result
+
+
+@router.post("/clear")
+async def clear_plot(request: ClearRequest) -> Dict[str, Any]:
+    """清空地块"""
+    if not game_service.has_active_game():
+        return {"success": False, "message": "没有进行中的游戏"}
+    
+    result = game_service.clear_plot(request.row, request.col)
+    return result
 
 
 @router.get("/crops")
-async def get_available_crops():
+async def get_available_crops() -> List[Dict[str, Any]]:
     """获取可种植作物列表"""
-    # TODO: 从配置中读取作物数据
-    return {
-        "crops": [
-            {"id": "turnip", "name": "萝卜", "season": "spring", "growth_days": 4},
-            {"id": "potato", "name": "土豆", "season": "spring", "growth_days": 6},
-            {"id": "tomato", "name": "番茄", "season": "summer", "growth_days": 11},
-            {"id": "corn", "name": "玉米", "season": "summer", "growth_days": 14},
-        ]
-    }
+    if not game_service.has_active_game():
+        raise HTTPException(status_code=400, detail="没有进行中的游戏")
+    
+    return game_service.get_available_crops()

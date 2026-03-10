@@ -5,82 +5,103 @@
 
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from typing import Dict, Optional
+from typing import Dict, Any
+
+from backend.services.game_session import game_service
 
 router = APIRouter()
 
 
 # ============ Schema 定义 ============
 
-class GameStatus(BaseModel):
-    """游戏状态"""
-    is_running: bool
-    season: str
-    day: int
-    year: int
-    weather: str
-
-
 class SaveGameRequest(BaseModel):
     """保存游戏请求"""
-    save_name: str
+    save_name: str = "save"
 
 
 class LoadGameRequest(BaseModel):
     """加载游戏请求"""
-    save_name: str
+    save_name: str = "save"
 
 
 # ============ API 端点 ============
 
 @router.get("/status")
-async def get_game_status() -> GameStatus:
+async def get_game_status() -> Dict[str, Any]:
     """获取游戏状态"""
-    # TODO: 实现游戏状态获取
-    return GameStatus(
-        is_running=True,
-        season="spring",
-        day=1,
-        year=1,
-        weather="sunny",
-    )
-
-
-@router.post("/advance_day")
-async def advance_day():
-    """推进到下一天"""
-    # TODO: 实现时间推进逻辑
+    if not game_service.has_active_game():
+        return {
+            "has_game": False,
+            "message": "没有进行中的游戏",
+        }
+    
+    state = game_service._get_game_state()
     return {
-        "success": True,
-        "new_day": 2,
-        "new_weather": "sunny",
-        "events": [],
+        "has_game": True,
+        "is_running": True,
+        "season": state.season,
+        "day": state.day,
+        "year": state.year,
+        "weather": state.weather,
     }
 
 
+@router.post("/advance_day")
+async def advance_day() -> Dict[str, Any]:
+    """推进到下一天"""
+    if not game_service.has_active_game():
+        return {"success": False, "message": "没有进行中的游戏"}
+    
+    result = game_service.advance_day()
+    return result
+
+
 @router.post("/save")
-async def save_game(request: SaveGameRequest):
+async def save_game(request: SaveGameRequest) -> Dict[str, Any]:
     """保存游戏"""
-    # TODO: 实现存档逻辑
-    return {"success": True, "message": f"游戏已保存到：{request.save_name}"}
+    if not game_service.has_active_game():
+        return {"success": False, "message": "没有进行中的游戏"}
+    
+    result = game_service.save_game(request.save_name)
+    return result
 
 
 @router.post("/load")
-async def load_game(request: LoadGameRequest):
+async def load_game(request: LoadGameRequest) -> Dict[str, Any]:
     """加载游戏"""
-    # TODO: 实现读档逻辑
-    return {"success": True, "message": f"游戏已从：{request.save_name} 加载"}
+    result = game_service.load_game(request.save_name)
+    return result
 
 
 @router.get("/saves")
-async def list_saves():
+async def list_saves() -> Dict[str, Any]:
     """获取存档列表"""
-    # TODO: 实现存档列表获取
-    return {"saves": []}
+    saves = game_service.get_save_files()
+    return {
+        "saves": saves,
+        "count": len(saves),
+    }
 
 
 @router.delete("/save/{save_name}")
-async def delete_save(save_name: str):
+async def delete_save(save_name: str) -> Dict[str, Any]:
     """删除存档"""
-    # TODO: 实现存档删除逻辑
+    import os
+    save_file = f"saves/{save_name}.json"
+    
+    if not os.path.exists(save_file):
+        return {"success": False, "message": f"存档不存在: {save_name}"}
+    
+    os.remove(save_file)
     return {"success": True, "message": f"存档 {save_name} 已删除"}
+
+
+@router.post("/reset")
+async def reset_game() -> Dict[str, Any]:
+    """重置游戏"""
+    # 重新初始化游戏服务
+    from backend.services.game_session import GameSessionService
+    global game_service
+    game_service = GameSessionService()
+    
+    return {"success": True, "message": "游戏已重置"}

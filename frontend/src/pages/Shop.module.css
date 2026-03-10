@@ -1,0 +1,159 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 16px;
+}
+
+.header {
+  border-radius: 12px;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shopTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shopIcon {
+  font-size: 24px;
+  color: #52c41a;
+}
+
+.titleText {
+  font-size: 20px;
+}
+
+.goldBadge {
+  font-size: 16px;
+}
+
+.tabs {
+  background: white;
+  border-radius: 8px;
+  padding: 0 8px;
+}
+
+.itemsGrid {
+  display: grid;
+  gap: 16px;
+}
+
+.itemCard {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.itemCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cantAfford {
+  opacity: 0.7;
+}
+
+.itemHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.itemEmoji {
+  font-size: 40px;
+}
+
+.itemInfo {
+  margin-bottom: 12px;
+}
+
+.itemName {
+  font-size: 16px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.itemDesc {
+  font-size: 12px;
+  display: block;
+  line-height: 1.4;
+}
+
+.itemFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.priceSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #faad14;
+}
+
+.totalPrice {
+  font-size: 12px;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quantityInput {
+  width: 50px;
+}
+
+.buyButton {
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .itemsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .itemCard {
+    margin-bottom: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    gap: 8px;
+  }
+  
+  .tabs :global(.ant-tabs-nav) {
+    margin-bottom: 0;
+  }
+  
+  .itemEmoji {
+    font-size: 32px;
+  }
+  
+  .itemName {
+    font-size: 14px;
+  }
+}

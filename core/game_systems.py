@@ -14,7 +14,6 @@ from models.soil import SoilManager, FertilizerType
 from models.weather import WeatherAgricultureSystem, Weather
 from models.level_system import LevelSystem
 from models.animal import AnimalManager, AnimalType
-from models.color_system import ColorCustomizationSystem
 from core.dynamics import (
     ProbabilityEngine, DamageCalculator, GrowthCalculator, 
     EconomyCalculator, BalanceSystem, StatSystem, DynamicStat, StatModifier
