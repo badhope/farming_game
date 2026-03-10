@@ -29,6 +29,9 @@ class GameState:
     stamina: int
     max_stamina: int
     plot_size: int
+    difficulty: str = "normal"
+    game_number: int = 1
+    total_games_played: int = 0
 
 
 @dataclass
@@ -58,10 +61,37 @@ class GameSessionService:
         self._save_path = "saves"
         os.makedirs(self._save_path, exist_ok=True)
     
-    def create_new_game(self, player_name: str = "农夫") -> GameState:
+    def create_new_game(self, player_name: str = "农夫", difficulty: str = "normal") -> GameState:
         """创建新游戏"""
-        self._current_game = GameManager()
+        self._current_game = GameManager(difficulty=difficulty)
         self._current_game.player.name = player_name
+        return self._get_game_state()
+    
+    def start_new_game_plus(self) -> GameState:
+        """开始新游戏+，继承部分进度"""
+        if not self._current_game:
+            raise RuntimeError("No active game session")
+        
+        old_gm = self._current_game
+        old_difficulty = getattr(old_gm, 'difficulty', 'normal')
+        old_total_games = getattr(old_gm, 'total_games_played', 0)
+        
+        self._current_game = GameManager(difficulty=old_difficulty)
+        self._current_game.player.name = old_gm.player.name
+        self._current_game.player.money = GameConfig.Difficulty.INITIAL_MONEY.get(
+            old_difficulty, GameConfig.Difficulty.INITIAL_MONEY[GameConfig.Difficulty.NORMAL]
+        )
+        self._current_game.player.max_stamina = GameConfig.Difficulty.INITIAL_STAMINA.get(
+            old_difficulty, GameConfig.Difficulty.INITIAL_STAMINA[GameConfig.Difficulty.NORMAL]
+        )
+        self._current_game.player.stamina = self._current_game.player.max_stamina
+        
+        self._current_game.total_games_played = old_total_games + 1
+        self._current_game.game_number = self._current_game.total_games_played
+        
+        self._current_game.player.inventory = {}
+        self._current_game.player.seeds = {}
+        
         return self._get_game_state()
     
     def get_current_game(self) -> Optional[GameManager]:
@@ -92,6 +122,9 @@ class GameSessionService:
             stamina=gm.player.stamina,
             max_stamina=gm.player.max_stamina,
             plot_size=gm.player.get_plot_size(),
+            difficulty=getattr(gm, 'difficulty', 'normal'),
+            game_number=getattr(gm, 'game_number', 1),
+            total_games_played=getattr(gm, 'total_games_played', 0),
         )
     
     def get_farm_plots(self) -> List[PlotData]:
@@ -312,6 +345,7 @@ class GameSessionService:
         
         gm = self._current_game
         save_data = {
+            "version": "4.1.0",
             "player": {
                 "name": gm.player.name,
                 "gold": gm.player.money,
@@ -319,6 +353,11 @@ class GameSessionService:
                 "exp": gm.player.exp,
                 "stamina": gm.player.stamina,
                 "max_stamina": gm.player.max_stamina,
+            },
+            "game": {
+                "difficulty": getattr(gm, 'difficulty', 'normal'),
+                "game_number": getattr(gm, 'game_number', 1),
+                "total_games_played": getattr(gm, 'total_games_played', 0),
             },
             "time": {
                 "season": gm.time_system.season.value,

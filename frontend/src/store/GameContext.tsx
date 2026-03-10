@@ -28,7 +28,8 @@ type GameAction =
   | { type: 'UPDATE_GOLD'; payload: number }
   | { type: 'UPDATE_PLOT'; payload: { row: number; col: number; plot: Plot } }
   | { type: 'SET_INITIALIZED'; payload: boolean }
-  | { type: 'RESET' };
+  | { type: 'RESET' }
+  | { type: 'RESET_GAME' };
 
 const initialState: GameStateData = {
   player: null,
@@ -80,6 +81,8 @@ function gameReducer(state: GameStateData, action: GameAction): GameStateData {
       return { ...state, isInitialized: action.payload };
     case 'RESET':
       return { ...initialState, isInitialized: true };
+    case 'RESET_GAME':
+      return { ...initialState, isInitialized: true };
     default:
       return state;
   }
@@ -88,7 +91,7 @@ function gameReducer(state: GameStateData, action: GameAction): GameStateData {
 interface GameContextType {
   state: GameStateData;
   dispatch: React.Dispatch<GameAction>;
-  createGame: (playerName: string) => Promise<boolean>;
+  createGame: (playerName: string, difficulty?: string) => Promise<boolean>;
   loadGameData: () => Promise<void>;
   plantCrop: (row: number, col: number, cropName: string) => Promise<boolean>;
   waterCrop: (row: number, col: number) => Promise<boolean>;
@@ -96,6 +99,7 @@ interface GameContextType {
   advanceDay: () => Promise<boolean>;
   saveGame: (saveName: string) => Promise<boolean>;
   loadGame: (saveName: string) => Promise<boolean>;
+  resetGame: () => Promise<boolean>;
 }
 
 const GameContext = createContext<GameContextType | null>(null);
@@ -103,10 +107,10 @@ const GameContext = createContext<GameContextType | null>(null);
 export function GameProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(gameReducer, initialState);
 
-  const createGame = async (playerName: string): Promise<boolean> => {
+  const createGame = async (playerName: string, difficulty: string = 'normal'): Promise<boolean> => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
-      const result = await apiClient.createGame(playerName);
+      const result = await apiClient.createGame(playerName, difficulty);
       if (result.success && result.state) {
         dispatch({ type: 'SET_GAME_STATE', payload: result.state });
         dispatch({
@@ -266,6 +270,20 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const resetGame = async (): Promise<boolean> => {
+    try {
+      const result = await apiClient.resetGame();
+      if (result.success) {
+        dispatch({ type: 'RESET_GAME' });
+        return true;
+      }
+      return false;
+    } catch (error) {
+      dispatch({ type: 'SET_ERROR', payload: '重置游戏失败' });
+      return false;
+    }
+  };
+
   useEffect(() => {
     const init = async () => {
       try {
@@ -296,6 +314,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         advanceDay,
         saveGame,
         loadGame,
+        resetGame,
       }}
     >
       {children}

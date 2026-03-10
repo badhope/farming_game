@@ -17,6 +17,7 @@ router = APIRouter()
 class CreateGameRequest(BaseModel):
     """创建新游戏请求"""
     player_name: str = "农夫"
+    difficulty: str = "normal"
 
 
 class PlayerInfo(BaseModel):
@@ -35,7 +36,7 @@ class PlayerInfo(BaseModel):
 async def create_game(request: CreateGameRequest) -> Dict[str, Any]:
     """创建新游戏"""
     try:
-        state = game_service.create_new_game(request.player_name)
+        state = game_service.create_new_game(request.player_name, request.difficulty)
         return {
             "success": True,
             "message": f"欢迎，{request.player_name}！游戏开始！",

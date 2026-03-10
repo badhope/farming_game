@@ -1,17 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Input, Button, Typography, Space, message } from 'antd';
-import { PlayCircleOutlined, CloudOutlined } from '@ant-design/icons';
+import { Card, Input, Button, Typography, Space, message, Segmented } from 'antd';
+import { PlayCircleOutlined, CloudOutlined, TrophyOutlined, ThunderboltOutlined, FlagOutlined } from '@ant-design/icons';
 import { useGame } from '../store/GameContext';
 import styles from './Home.module.css';
 
 const { Title, Text } = Typography;
 
+const difficulties = [
+  { value: 'easy', label: '简单', icon: '🌟' },
+  { value: 'normal', label: '普通', icon: '⚔️' },
+  { value: 'hard', label: '困难', icon: '🔥' },
+];
+
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const { createGame, state } = useGame();
   const [playerName, setPlayerName] = useState('农夫');
+  const [difficulty, setDifficulty] = useState('normal');
   const [loading, setLoading] = useState(false);
+
+  const getDifficultyInfo = (diff: string) => {
+    const info: Record<string, { money: string; stamina: string; desc: string }> = {
+      easy: { money: '1000', stamina: '150', desc: '作物生长快，金币多，暴风雨少' },
+      normal: { money: '500', stamina: '100', desc: '标准难度' },
+      hard: { money: '200', stamina: '80', desc: '作物生长慢，金币少，暴风雨多' },
+    };
+    return info[diff] || info.normal;
+  };
 
   const handleStartGame = async () => {
     if (!playerName.trim()) {
@@ -19,7 +35,7 @@ const Home: React.FC = () => {
       return;
     }
     setLoading(true);
-    const success = await createGame(playerName.trim());
+    const success = await createGame(playerName.trim(), difficulty);
     setLoading(false);
     if (success) {
       message.success('游戏开始！');
@@ -58,6 +74,26 @@ const Home: React.FC = () => {
                 maxLength={20}
                 className={styles.input}
               />
+            </div>
+
+            <div>
+              <Text strong><FlagOutlined /> 选择难度</Text>
+              <Segmented
+                value={difficulty}
+                onChange={(val) => setDifficulty(val as string)}
+                options={difficulties}
+                block
+                className={styles.difficultySelector}
+              />
+              <div style={{ marginTop: 8, padding: '8px 12px', background: '#f5f5f5', borderRadius: 6 }}>
+                <Space>
+                  <Text><ThunderboltOutlined /> 初始金币: {getDifficultyInfo(difficulty).money}</Text>
+                  <Text><TrophyOutlined /> 初始体力: {getDifficultyInfo(difficulty).stamina}</Text>
+                </Space>
+                <div style={{ marginTop: 4 }}>
+                  <Text type="secondary">{getDifficultyInfo(difficulty).desc}</Text>
+                </div>
+              </div>
             </div>
 
             <Button

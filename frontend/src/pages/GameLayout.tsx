@@ -10,9 +10,10 @@ import {
   SaveOutlined,
   FolderOpenOutlined,
   ArrowLeftOutlined,
-  ReloadOutlined,
-  MenuOutlined,
   SettingOutlined,
+  MenuOutlined,
+  FlagOutlined,
+  PlayCircleOutlined,
 } from '@ant-design/icons';
 import { useGame } from '../store/GameContext';
 import { apiClient } from '../api/client';
@@ -30,7 +31,7 @@ interface MenuItem {
 const GameLayout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { state, saveGame, loadGame } = useGame();
+  const { state, saveGame, loadGame, resetGame } = useGame();
   const [saveModalVisible, setSaveModalVisible] = useState(false);
   const [loadModalVisible, setLoadModalVisible] = useState(false);
   const [settingsVisible, setSettingsVisible] = useState(false);
@@ -85,6 +86,42 @@ const GameLayout: React.FC = () => {
     }
   };
 
+  const handleResetGame = () => {
+    Modal.confirm({
+      title: '重新开始',
+      content: '确定要重新开始游戏吗？所有进度将会丢失！',
+      okText: '确定',
+      cancelText: '取消',
+      onOk: async () => {
+        const success = await resetGame();
+        if (success) {
+          message.success('游戏已重置');
+          navigate('/');
+        }
+      },
+    });
+  };
+
+  const handleNewGamePlus = () => {
+    Modal.confirm({
+      title: '新游戏+',
+      content: '开始新游戏+会继承：\n• 已解锁的成就\n• 总游戏次数\n• 玩家名称\n\n将重置：\n• 金币和体力\n• 农田和背包\n• 季节和时间',
+      okText: '开始新游戏+',
+      cancelText: '取消',
+      onOk: async () => {
+        try {
+          const result = await apiClient.startNewGamePlus();
+          if (result.success) {
+            message.success(result.message);
+            navigate('/game/farm');
+          }
+        } catch (error) {
+          message.error('新游戏+失败');
+        }
+      },
+    });
+  };
+
   const openSaveModal = () => {
     setSaveName(`存档_${new Date().toLocaleDateString()}`);
     setSaveModalVisible(true);
@@ -103,6 +140,10 @@ const GameLayout: React.FC = () => {
   const saveMenuItems = [
     { key: 'save', icon: <SaveOutlined />, label: '保存游戏', onClick: openSaveModal },
     { key: 'load', icon: <FolderOpenOutlined />, label: '加载游戏', onClick: openLoadModal },
+    { type: 'divider' as const },
+    { key: 'newgameplus', icon: <PlayCircleOutlined />, label: '新游戏+', onClick: handleNewGamePlus },
+    { key: 'reset', icon: <FlagOutlined />, label: '重新开始', danger: true, onClick: handleResetGame },
+    { type: 'divider' as const },
     { key: 'settings', icon: <SettingOutlined />, label: '设置', onClick: () => setSettingsVisible(true) },
   ];
 

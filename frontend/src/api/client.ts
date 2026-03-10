@@ -48,8 +48,8 @@ class ApiClient {
 
   // ========== 玩家 API ==========
 
-  async createGame(playerName: string): Promise<{ success: boolean; message?: string; state?: GameState }> {
-    const response = await this.client.post('/player/create', { player_name: playerName });
+  async createGame(playerName: string, difficulty: string = 'normal'): Promise<{ success: boolean; message?: string; state?: GameState }> {
+    const response = await this.client.post('/player/create', { player_name: playerName, difficulty });
     return response.data;
   }
 
@@ -151,6 +151,21 @@ class ApiClient {
 
   async resetGame(): Promise<SaveLoadResponse> {
     const response = await this.client.post<SaveLoadResponse>('/game/reset');
+    return response.data;
+  }
+
+  async startNewGamePlus(): Promise<{ success: boolean; message: string; game_number: number }> {
+    const response = await this.client.post('/game/new_game_plus');
+    return response.data;
+  }
+
+  async getGameInfo(): Promise<{
+    has_game: boolean;
+    difficulty?: string;
+    game_number?: number;
+    total_games_played?: number;
+  }> {
+    const response = await this.client.get('/game/game_info');
     return response.data;
   }
 

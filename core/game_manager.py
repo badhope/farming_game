@@ -39,8 +39,11 @@ class GameManager:
     整合所有游戏子系统，提供统一的游戏操作接口
     """
     
-    def __init__(self):
+    def __init__(self, difficulty: str = GameConfig.Difficulty.NORMAL):
         """初始化游戏管理器"""
+        # 难度设置
+        self.difficulty = difficulty
+        
         # 核心系统
         self.time_system = TimeSystem()
         self.economy_system = EconomySystem()
@@ -52,8 +55,9 @@ class GameManager:
         self.ai_advisor = AIPlantingAdvisor()
         self.ai_analyzer = AIFarmAnalyzer()
         
-        # 玩家数据
+        # 玩家数据 - 根据难度初始化
         self.player = Player()
+        self._apply_difficulty_to_player()
         
         # 农田数据
         self.plots: List[List[Plot]] = []
@@ -70,6 +74,38 @@ class GameManager:
         self.auto_run = True  # 自动运行开关
         self.last_auto_advance = 0  # 上次自动推进时间
         self.auto_advance_interval = 30  # 自动推进间隔（秒）
+        
+        # 游戏统计
+        self.game_number = 1  # 第几轮游戏
+        self.total_games_played = 0  # 总游戏次数
+    
+    def _apply_difficulty_to_player(self) -> None:
+        """根据难度设置玩家属性"""
+        diff = GameConfig.Difficulty
+        self.player.money = diff.INITIAL_MONEY.get(self.difficulty, diff.INITIAL_MONEY[diff.NORMAL])
+        self.player.max_stamina = diff.INITIAL_STAMINA.get(self.difficulty, diff.INITIAL_STAMINA[diff.NORMAL])
+        self.player.stamina = self.player.max_stamina
+    
+    def get_storm_damage_chance(self) -> float:
+        """获取当前难度的暴风雨损坏概率"""
+        return GameConfig.Difficulty.STORM_DAMAGE_CHANCE.get(
+            self.difficulty, 
+            GameConfig.Difficulty.STORM_DAMAGE_CHANCE[GameConfig.Difficulty.NORMAL]
+        )
+    
+    def get_growth_speed(self) -> float:
+        """获取当前难度的作物生长速度"""
+        return GameConfig.Difficulty.GROWTH_SPEED.get(
+            self.difficulty,
+            GameConfig.Difficulty.GROWTH_SPEED[GameConfig.Difficulty.NORMAL]
+        )
+    
+    def get_sell_price_multiplier(self) -> float:
+        """获取当前难度的出售价格乘数"""
+        return GameConfig.Difficulty.SELL_PRICE_MULTIPLIER.get(
+            self.difficulty,
+            GameConfig.Difficulty.SELL_PRICE_MULTIPLIER[GameConfig.Difficulty.NORMAL]
+        )
     
     def _init_plots(self) -> None:
         """初始化农田"""
@@ -392,7 +428,7 @@ class GameManager:
                             plot.force_water()
                         
                         # 暴风雨可能摧毁作物
-                        if is_stormy and random.random() < GameConfig.STORM_DAMAGE_CHANCE:
+                        if is_stormy and random.random() < self.get_storm_damage_chance():
                             plot.clear()
                             result.crops_destroyed += 1
                             result.events.append(f"⛈️ {crop.emoji} {crop.name} 被暴风雨摧毁")

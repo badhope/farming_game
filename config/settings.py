@@ -12,11 +12,68 @@ from config.enums import Season, Weather, CropType
 class GameConfig:
     """游戏配置常量"""
     
+    # ========== 难度设置 ==========
+    class Difficulty:
+        """游戏难度配置"""
+        # 难度名称
+        EASY = "easy"
+        NORMAL = "normal"
+        HARD = "hard"
+        
+        # 难度显示名称
+        DISPLAY_NAMES = {
+            EASY: "简单",
+            NORMAL: "普通",
+            HARD: "困难"
+        }
+        
+        # 各难度初始金币
+        INITIAL_MONEY = {
+            EASY: 1000,
+            NORMAL: 500,
+            HARD: 200
+        }
+        
+        # 各难度暴风雨损坏概率
+        STORM_DAMAGE_CHANCE = {
+            EASY: 0.15,
+            NORMAL: 0.30,
+            HARD: 0.50
+        }
+        
+        # 各难度作物生长速度加成 (1.0 = 正常, >1.0 = 更快)
+        GROWTH_SPEED = {
+            EASY: 1.2,
+            NORMAL: 1.0,
+            HARD: 0.8
+        }
+        
+        # 各难度出售价格加成
+        SELL_PRICE_MULTIPLIER = {
+            EASY: 1.2,
+            NORMAL: 1.0,
+            HARD: 0.9
+        }
+        
+        # 各难度天气恶劣概率加成
+        BAD_WEATHER_CHANCE = {
+            EASY: 0.7,
+            NORMAL: 1.0,
+            HARD: 1.5
+        }
+        
+        # 各难度初始体力
+        INITIAL_STAMINA = {
+            EASY: 150,
+            NORMAL: 100,
+            HARD: 80
+        }
+    
     # 时间设置
     DAYS_PER_SEASON = 28          # 每季天数
     SEASONS_PER_YEAR = 4          # 每年季节数
     
-    # 初始设置
+    # 初始设置 (默认普通难度)
     INITIAL_MONEY = 500           # 初始金币
     INITIAL_PLOT_SIZE = 3         # 初始田地大小 (3x3)
     MAX_UPGRADE_LEVEL = 4         # 最大升级等级
@@ -32,7 +89,7 @@ class GameConfig:
         Season.WINTER: [0.20, 0.15, 0.25, 0.05, 0.30, 0.05, 0.0, 0.0, 0.0],
     }
     
-    # 暴风雨损坏作物概率
+    # 暴风雨损坏作物概率 (默认)
     STORM_DAMAGE_CHANCE = 0.30
     
     # 存档文件名

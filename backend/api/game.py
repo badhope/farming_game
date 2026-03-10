@@ -99,9 +99,43 @@ async def delete_save(save_name: str) -> Dict[str, Any]:
 @router.post("/reset")
 async def reset_game() -> Dict[str, Any]:
     """重置游戏"""
-    # 重新初始化游戏服务
     from backend.services.game_session import GameSessionService
     global game_service
     game_service = GameSessionService()
     
     return {"success": True, "message": "游戏已重置"}
+
+
+@router.post("/new_game_plus")
+async def start_new_game_plus() -> Dict[str, Any]:
+    """开始新游戏+（多周目），继承部分进度"""
+    if not game_service.has_active_game():
+        return {"success": False, "message": "没有进行中的游戏"}
+    
+    gm = game_service.get_current_game()
+    
+    total_games = getattr(gm, 'total_games_played', 0) + 1
+    
+    result = game_service.start_new_game_plus()
+    return {
+        "success": True,
+        "message": f"开始第{total_games}轮游戏！",
+        "game_number": total_games,
+    }
+
+
+@router.get("/game_info")
+async def get_game_info() -> Dict[str, Any]:
+    """获取当前游戏信息（难度、周目等）"""
+    if not game_service.has_active_game():
+        return {
+            "has_game": False,
+        }
+    
+    state = game_service._get_game_state()
+    return {
+        "has_game": True,
+        "difficulty": state.difficulty,
+        "game_number": state.game_number,
+        "total_games_played": state.total_games_played,
+    }
