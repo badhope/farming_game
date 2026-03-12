@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
 
-router = APIRouter(prefix="/api/shop", tags=["shop"])
+router = APIRouter(tags=["商店"])
 
 class ShopItem(BaseModel):
     id: str
@@ -115,23 +115,24 @@ async def get_shop_items():
     return shop_items
 
 @router.post("/buy")
-async def buy_item(request: BuyRequest, db=None):
-    from backend.main import game_session
-    from models.player import Player
+async def buy_item(request: BuyRequest):
+    from backend.services.game_session import game_service
     
-    player = game_session.player
-    if not player:
+    if not game_service.has_active_game():
         raise HTTPException(status_code=400, detail="没有进行中的游戏")
+    
+    gm = game_service.get_current_game()
+    player = gm.player
     
     item = next((i for i in shop_items if i.id == request.item_id), None)
     if not item:
         raise HTTPException(status_code=404, detail="商品不存在")
     
     total_price = item.price * request.quantity
-    if player.gold < total_price:
+    if player.money < total_price:
         raise HTTPException(status_code=400, detail="金币不足")
     
-    player.gold -= total_price
+    player.money -= total_price
     
     if item.category == "seed":
         if not hasattr(player, 'inventory'):
@@ -150,13 +151,16 @@ async def buy_item(request: BuyRequest, db=None):
     return {
         "success": True,
         "message": f"购买了 {request.quantity} 个 {item.name}",
-        "remaining_gold": player.gold
+        "remaining_gold": player.money
     }
 
 @router.get("/history")
 async def get_shop_history():
-    from backend.main import game_session
-    player = game_session.player
-    if not player:
+    from backend.services.game_session import game_service
+    
+    if not game_service.has_active_game():
         return {"history": []}
+    
+    gm = game_service.get_current_game()
+    player = gm.player
     return {"history": getattr(player, 'shop_history', [])}

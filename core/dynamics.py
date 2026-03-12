@@ -323,7 +323,7 @@ class DynamicFormula:
         
         try:
             return eval(formula, {"__builtins__": {}}, safe_vars)
-        except:
+        except (ValueError, TypeError, SyntaxError, KeyError):
             return 0
     
     @staticmethod

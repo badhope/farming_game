@@ -396,56 +396,71 @@ class GameSessionService:
         if not os.path.exists(save_file):
             return {"success": False, "message": f"存档不存在: {save_name}"}
         
-        with open(save_file, "r", encoding="utf-8") as f:
-            save_data = json.load(f)
+        try:
+            with open(save_file, "r", encoding="utf-8") as f:
+                save_data = json.load(f)
+        except (json.JSONDecodeError, IOError) as e:
+            return {"success": False, "message": f"读取存档失败: {str(e)}"}
         
-        # 创建新游戏并加载数据
-        self._current_game = GameManager()
+        if "version" not in save_data or "player" not in save_data:
+            return {"success": False, "message": "存档文件格式不正确"}
         
-        # 恢复玩家数据
-        player_data = save_data["player"]
-        self._current_game.player.name = player_data["name"]
-        self._current_game.player.money = player_data["gold"]
-        self._current_game.player.level = player_data["level"]
-        self._current_game.player.exp = player_data["exp"]
-        self._current_game.player.stamina = player_data["stamina"]
-        self._current_game.player.max_stamina = player_data["max_stamina"]
-        
-        # 恢复时间数据
-        time_data = save_data["time"]
-        self._current_game.time_system.season = Season(time_data["season"])
-        self._current_game.time_system.day = time_data["day"]
-        self._current_game.time_system.year = time_data["year"]
-        self._current_game.time_system.weather = Weather(time_data["weather"])
-        
-        # 恢复农田数据
-        plots_data = save_data["plots"]
-        for row_idx, row_data in enumerate(plots_data):
-            for col_idx, plot_data in enumerate(row_data):
-                plot = self._current_game.plots[row_idx][col_idx]
-                if plot_data["has_crop"]:
-                    crop_name = plot_data["crop_name"]
-                    if crop_name in CropData.CROPS:
-                        data = CropData.CROPS[crop_name]
-                        from models.crop import Crop
-                        plot.crop = Crop(
-                            name=crop_name,
-                            seed_price=data["seed_price"],
-                            sell_price=data["sell_price"],
-                            grow_days=data["grow_days"],
-                            seasons=data["seasons"],
-                            water_needed=data["water_needed"],
-                            emoji=data["emoji"],
-                            crop_type=data["crop_type"],
-                            description=data.get("description", ""),
-                        )
-                plot.planted_day = plot_data["planted_day"]
-                plot.watered_today = plot_data["watered_today"]
-                plot.growth_stage = plot_data["growth_stage"]
-                plot.days_watered = plot_data["days_watered"]
-        
-        state = self._get_game_state()
-        return {"success": True, "message": f"游戏已加载: {save_name}", "state": asdict(state)}
+        try:
+            self._current_game = GameManager()
+            
+            player_data = save_data["player"]
+            self._current_game.player.name = player_data.get("name", "农夫")
+            self._current_game.player.money = player_data.get("gold", 500)
+            self._current_game.player.level = player_data.get("level", 1)
+            self._current_game.player.exp = player_data.get("exp", 0)
+            self._current_game.player.stamina = player_data.get("stamina", 100)
+            self._current_game.player.max_stamina = player_data.get("max_stamina", 100)
+            
+            time_data = save_data.get("time", {})
+            try:
+                self._current_game.time_system.season = Season(time_data.get("season", "春天"))
+            except ValueError:
+                self._current_game.time_system.season = Season.SPRING
+            self._current_game.time_system.day = time_data.get("day", 1)
+            self._current_game.time_system.year = time_data.get("year", 1)
+            try:
+                self._current_game.time_system.weather = Weather(time_data.get("weather", "晴天"))
+            except ValueError:
+                self._current_game.time_system.weather = Weather.SUNNY
+            
+            plots_data = save_data.get("plots", [])
+            for row_idx, row_data in enumerate(plots_data):
+                if row_idx >= len(self._current_game.plots):
+                    break
+                for col_idx, plot_data in enumerate(row_data):
+                    if col_idx >= len(self._current_game.plots[row_idx]):
+                        break
+                    plot = self._current_game.plots[row_idx][col_idx]
+                    if plot_data.get("has_crop"):
+                        crop_name = plot_data.get("crop_name")
+                        if crop_name and crop_name in CropData.CROPS:
+                            data = CropData.CROPS[crop_name]
+                            from models.crop import Crop
+                            plot.crop = Crop(
+                                name=crop_name,
+                                seed_price=data["seed_price"],
+                                sell_price=data["sell_price"],
+                                grow_days=data["grow_days"],
+                                seasons=data["seasons"],
+                                water_needed=data["water_needed"],
+                                emoji=data["emoji"],
+                                crop_type=data["crop_type"],
+                                description=data.get("description", ""),
+                            )
+                    plot.planted_day = plot_data.get("planted_day", 0)
+                    plot.watered_today = plot_data.get("watered_today", False)
+                    plot.growth_stage = plot_data.get("growth_stage", 0)
+                    plot.days_watered = plot_data.get("days_watered", 0)
+            
+            state = self._get_game_state()
+            return {"success": True, "message": f"游戏已加载: {save_name}", "state": asdict(state)}
+        except Exception as e:
+            return {"success": False, "message": f"加载存档失败: {str(e)}"}
     
     def get_save_files(self) -> List[str]:
         """获取存档列表"""
