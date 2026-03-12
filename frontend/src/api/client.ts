@@ -2,7 +2,6 @@ import axios, { type AxiosInstance, AxiosError } from 'axios';
 import type {
   Player,
   GameState,
-  Plot,
   Crop,
   Achievement,
   PlantAdvice,
@@ -15,7 +14,6 @@ import type {
   SaveLoadResponse,
   SavesListResponse,
   PlayerStats,
-  AIChatRequest,
   AIChatResponse,
   ShopItem,
   ShopHistoryItem,

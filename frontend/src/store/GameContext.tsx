@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
 import type { Player, GameState, Plot, Crop, GameStatus, Achievement, PlayerStats } from '../types';
 import { apiClient } from '../api/client';
 
@@ -25,6 +25,7 @@ type GameAction =
   | { type: 'SET_ACHIEVEMENTS'; payload: Achievement[] }
   | { type: 'SET_PLAYER_STATS'; payload: PlayerStats | null }
   | { type: 'SET_STATUS'; payload: GameStatus }
+  | { type: 'UPDATE_PLAYER'; payload: Partial<Player> }
   | { type: 'UPDATE_GOLD'; payload: number }
   | { type: 'UPDATE_PLOT'; payload: { row: number; col: number; plot: Plot } }
   | { type: 'SET_INITIALIZED'; payload: boolean }
@@ -54,6 +55,11 @@ function gameReducer(state: GameStateData, action: GameAction): GameStateData {
       return { ...state, gameState: action.payload };
     case 'SET_PLAYER':
       return { ...state, player: action.payload };
+    case 'UPDATE_PLAYER':
+      if (state.player) {
+        return { ...state, player: { ...state.player, ...action.payload } };
+      }
+      return state;
     case 'SET_PLOTS':
       return { ...state, plots: action.payload };
     case 'SET_CROPS':

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Card, Input, Button, Typography, Space, Spin, Modal, Form, Select, InputNumber, message, Switch, Tag } from 'antd';
+import { Card, Input, Button, Typography, Space, Spin, Modal, Form, Select, InputNumber, message, Tag } from 'antd';
 import { SendOutlined, RobotOutlined, UserOutlined, SettingOutlined, ApiOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { apiClient } from '../api/client';
 import type { AIConfig } from '../types';

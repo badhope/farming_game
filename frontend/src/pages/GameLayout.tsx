@@ -14,6 +14,7 @@ import {
   MenuOutlined,
   FlagOutlined,
   PlayCircleOutlined,
+  ReloadOutlined,
 } from '@ant-design/icons';
 import { useGame } from '../store/GameContext';
 import { apiClient } from '../api/client';
@@ -151,7 +152,7 @@ const GameLayout: React.FC = () => {
     <Menu
       mode="inline"
       selectedKeys={[location.pathname]}
-      items={menuItems}
+      items={menuItems as any}
       onClick={({ key }) => handleMenuClick(key)}
       className={styles.menu}
       style={isMobile ? { width: 200 } : {}}

@@ -4,7 +4,7 @@ import { useGame } from '../store/GameContext';
 import { apiClient } from '../api/client';
 import styles from './Farm.module.css';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const { useBreakpoint } = Grid;
 
 interface PlotData {
@@ -98,7 +98,7 @@ const Farm: React.FC = () => {
         apiClient.getTimeStatus(),
       ]);
       setPlots(plotsData);
-      setCrops(cropsData);
+      setCrops(cropsData as unknown as CropOption[]);
       setTimeStatus(timeData);
     } catch (error: any) {
       console.error('加载数据失败:', error);
@@ -200,13 +200,13 @@ const Farm: React.FC = () => {
           </div>
           <div className={styles.weatherInfo}>
             <span className={styles.weatherCurrent}>
-              {weatherEmojis[timeStatus.weather] || <SunOutlined />}
+              {weatherEmojis[timeStatus.weather] || '☀️'}
               <span>{timeStatus.weather}</span>
             </span>
             <span className={styles.weatherTomorrow}>
               明天: {timeStatus.tomorrow_weather ? (
                 <>
-                  {weatherEmojis[timeStatus.tomorrow_weather] || <SunOutlined />}
+                  {weatherEmojis[timeStatus.tomorrow_weather] || '☀️'}
                   <span>{timeStatus.tomorrow_weather}</span>
                 </>
               ) : '-'}

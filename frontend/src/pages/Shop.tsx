@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Tabs, Button, InputNumber, message, Tag, Spin, Empty, Typography, Grid, Badge } from 'antd';
-import { ShoppingCartOutlined, HistoryOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
+import { ShoppingCartOutlined, PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { useGame } from '../store/GameContext';
 import { apiClient } from '../api/client';
 import type { ShopItem } from '../types';
@@ -72,7 +72,7 @@ const Shop: React.FC = () => {
         message.success(result.message);
         dispatch({ 
           type: 'UPDATE_PLAYER', 
-          payload: { ...state.player, gold: result.remaining_gold } as any 
+          payload: { gold: result.remaining_gold }
         });
       }
     } catch (error: any) {
@@ -134,7 +134,7 @@ const Shop: React.FC = () => {
         onChange={setActiveTab}
         items={tabItems}
         className={styles.tabs}
-        size={screens.md ? 'default' : 'small'}
+        size={screens.md ? 'small' as const : 'small' as const}
       />
 
       {filteredItems.length === 0 ? (

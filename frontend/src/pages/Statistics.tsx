@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Typography, Statistic, Row, Col, Progress, Table } from 'antd';
+import { Card, Typography, Statistic, Row, Col, Progress } from 'antd';
 import { DollarOutlined, HomeOutlined, RiseOutlined, TrophyOutlined } from '@ant-design/icons';
 import { apiClient } from '../api/client';
 import type { PlayerStats } from '../types';
@@ -9,7 +9,7 @@ const { Title, Text } = Typography;
 
 const Statistics: React.FC = () => {
   const [stats, setStats] = useState<PlayerStats | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadStats();

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Card, Input, Button, Typography, Space, message, Segmented, Collapse, Timeline, FloatButton } from 'antd';
-import { PlayCircleOutlined, FlagOutlined, CheckCircleOutlined, QuestionCircleOutlined, MailOutlined, GithubOutlined, StarOutlined, TrophyOutlined, ThunderboltOutlined, HeartOutlined, SmileOutlined } from '@ant-design/icons';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Card, Input, Button, Typography, Space, message, Segmented, Collapse, FloatButton } from 'antd';
+import { PlayCircleOutlined, FlagOutlined, MailOutlined, GithubOutlined, StarOutlined, TrophyOutlined, ThunderboltOutlined, HeartOutlined, SmileOutlined } from '@ant-design/icons';
 import { useGame } from '../store/GameContext';
 import styles from './Home.module.css';
 
@@ -108,7 +108,6 @@ const Home: React.FC = () => {
   const [playerName, setPlayerName] = useState('农夫');
   const [difficulty, setDifficulty] = useState('normal');
   const [loading, setLoading] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
 
   const getDifficultyInfo = (diff: string) => {
     const info: Record<string, { money: string; stamina: string; desc: string }> = {
@@ -332,6 +331,7 @@ const Home: React.FC = () => {
             <div className={styles.footerSection}>
               <Title level={5}>快速链接</Title>
               <div className={styles.footerLinks}>
+                <Link to="/download"><Button type="link">下载中心</Button></Link>
                 <Button type="link" onClick={() => scrollToSection('features')}>特色功能</Button>
                 <Button type="link" onClick={() => scrollToSection('guide')}>游戏指南</Button>
                 <Button type="link" onClick={() => scrollToSection('faq')}>常见问题</Button>

@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
-import { GameProvider } from './store/GameContext';
 import Home from './pages/Home';
+import Download from './pages/Download';
 import GameLayout from './pages/GameLayout';
 import Farm from './pages/Farm';
 import Shop from './pages/Shop';
@@ -12,6 +12,10 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+  },
+  {
+    path: '/download',
+    element: <Download />,
   },
   {
     path: '/game',

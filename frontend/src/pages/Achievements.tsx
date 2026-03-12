@@ -9,7 +9,7 @@ const { Title, Text } = Typography;
 
 const Achievements: React.FC = () => {
   const [achievements, setAchievements] = useState<Achievement[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadAchievements();
