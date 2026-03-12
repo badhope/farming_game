@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Space, Typography, message, Modal, Grid, Spin, Empty, Progress } from 'antd';
-import { ThunderboltOutlined, CalendarOutlined, CloudOutlined, SunOutlined, CloudRainOutlined, ThunderboltOutlined as StormOutlined } from '@ant-design/icons';
 import { useGame } from '../store/GameContext';
 import { apiClient } from '../api/client';
 import styles from './Farm.module.css';
@@ -49,15 +48,18 @@ const seasonEmojis: Record<string, string> = {
   '冬': '❄️',
 };
 
-const weatherEmojis: Record<string, React.ReactNode> = {
-  '晴天': <SunOutlined style={{ color: '#faad14' }} />,
-  '多云': <CloudOutlined style={{ color: '#8c8c8c' }} />,
-  '雨天': <CloudRainOutlined style={{ color: '#1890ff' }} />,
-  '暴风雨': <StormOutlined style={{ color: '#722ed1' }} />,
-  'sunny': <SunOutlined style={{ color: '#faad14' }} />,
-  'cloudy': <CloudOutlined style={{ color: '#8c8c8c' }} />,
-  'rainy': <CloudRainOutlined style={{ color: '#1890ff' }} />,
-  'stormy': <StormOutlined style={{ color: '#722ed1' }} />,
+const weatherEmojis: Record<string, string> = {
+  '晴天': '☀️',
+  '多云': '☁️',
+  '雨天': '🌧️',
+  '暴风雨': '⛈️',
+  'sunny': '☀️',
+  'cloudy': '☁️',
+  'rainy': '🌧️',
+  'stormy': '⛈️',
+  '大风': '💨',
+  '雪': '❄️',
+  'fog': '🌫️',
 };
 
 const Farm: React.FC = () => {
@@ -229,12 +231,11 @@ const Farm: React.FC = () => {
         <Space wrap>
           <Button
             className={styles.advanceButton}
-            icon={<ThunderboltOutlined />}
             onClick={handleAdvanceDay}
             loading={loading}
             size="large"
           >
-            推进时间 (休息)
+            ⏰ 推进时间 (休息)
           </Button>
           <Text type="secondary">
             休息到下一天，作物会生长
