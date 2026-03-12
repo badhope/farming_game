@@ -2,63 +2,243 @@
   "achievements": {
     "first_harvest": {
       "name": "🌾 初次收获",
-      "description": "收获第一个作物",
+      "description": "收获你的第一个作物，标志着农场生涯的开始。每一次丰收都源自于辛勤的耕耘，这次收获将是你成为顶级农夫的第一步。",
       "condition": "harvest_count >= 1",
-      "reward_text": "开启你的农场之旅！"
+      "reward_text": "恭喜你收获了第一个作物！农场的未来充满希望，继续加油！"
     },
-    "farmer_100": {
+    "harvest_10": {
+      "name": "🥗 初露锋芒",
+      "description": "累计收获10个作物，你已经掌握了基本的种植技巧。现在你可以尝试更复杂的作物组合，探索不同的种植策略。",
+      "condition": "harvest_count >= 10",
+      "reward_text": "收获10个作物！你已经不再是新手农夫了。"
+    },
+    "harvest_50": {
+      "name": "🌻 丰收小能手",
+      "description": "累计收获50个作物，你的农场开始初具规模。稳定的产量让你有更多的资源去尝试新的作物和高级玩法。",
+      "condition": "harvest_count >= 50",
+      "reward_text": "丰收小能手称号get！你的农场越来越热闹了。"
+    },
+    "harvest_100": {
       "name": "👨‍🌾 小农夫",
-      "description": "累计收获 100 个作物",
+      "description": "累计收获100个作物，你已经是一名合格的农夫了。丰富的经验让你能够从容应对各种种植挑战。",
       "condition": "harvest_count >= 100",
-      "reward_text": "你已经入门了！"
+      "reward_text": "你已经入门了！继续向更高的目标迈进。"
     },
-    "farmer_500": {
+    "harvest_300": {
       "name": "🧑‍🌾 经验农夫",
-      "description": "累计收获 500 个作物",
+      "description": "累计收获300个作物，你的种植技术已经相当成熟。现在你可以挑战更高难度的作物和更复杂的农业系统。",
+      "condition": "harvest_count >= 300",
+      "reward_text": "经验丰富的农夫！你的农场欣欣向荣。"
+    },
+    "harvest_500": {
+      "name": "🚜 农业老手",
+      "description": "累计收获500个作物，你在农业领域已经积累了丰富的经验。各种作物的特性和种植技巧都已了如指掌。",
       "condition": "harvest_count >= 500",
-      "reward_text": "经验丰富的农夫！"
+      "reward_text": "农业老手称号！你对农业的理解已经炉火纯青。"
     },
-    "farmer_1000": {
+    "harvest_1000": {
       "name": "👨‍🌾 农场大师",
-      "description": "累计收获 1000 个作物",
+      "description": "累计收获1000个作物，你已经站在了普通农夫的巅峰。这个成就代表了无数的汗水和努力。",
       "condition": "harvest_count >= 1000",
-      "reward_text": "传奇农夫诞生！"
+      "reward_text": "传奇农夫诞生！你的农场将成为传奇。"
     },
-    "millionaire": {
-      "name": "💰 百万富翁",
-      "description": "累计赚取 1,000,000 金币",
+    "harvest_5000": {
+      "name": "🏆 农业传奇",
+      "description": "累计收获5000个作物，你已经成为了农业界的传奇人物。这个成就需要坚持不懈的努力和对农业的热爱。",
+      "condition": "harvest_count >= 5000",
+      "reward_text": "农业传奇！你的故事将激励后来的农夫们。"
+    },
+    "money_1000": {
+      "name": "💵 小有积蓄",
+      "description": "累计赚取1000金币，你已经开始了原始积累。有了一定的资金基础，你可以考虑更昂贵的作物和投资。",
+      "condition": "total_earnings >= 1000",
+      "reward_text": "小有积蓄！继续努力积累财富。"
+    },
+    "money_10000": {
+      "name": "💴 万元户",
+      "description": "累计赚取10000金币，你已经成为了万元户。稳定的收入来源让你的农场可以持续发展。",
+      "condition": "total_earnings >= 10000",
+      "reward_text": "万元户达成！你的农场蒸蒸日上。"
+    },
+    "money_50000": {
+      "name": "💰 五万富翁",
+      "description": "累计赚取50000金币，你的农场已经小有规模。充足的资金让你可以尝试更多的投资机会。",
+      "condition": "total_earnings >= 50000",
+      "reward_text": "五万富翁！资金充裕，农场发展顺利。"
+    },
+    "money_100000": {
+      "name": "💎 十万富翁",
+      "description": "累计赚取100000金币，你已经是一位成功的农场主。丰厚的收益证明了你的农业才能。",
+      "condition": "total_earnings >= 100000",
+      "reward_text": "十万富翁！你的农业帝国正在崛起。"
+    },
+    "money_500000": {
+      "name": "🏦 五十万巨富",
+      "description": "累计赚取500000金币，你的农场已经发展成为一个盈利丰厚的企业。规模化经营让你盆满钵满。",
+      "condition": "total_earnings >= 500000",
+      "reward_text": "五十万巨富！你是真正的农场大亨。"
+    },
+    "money_1000000": {
+      "name": "💲 百万富翁",
+      "description": "累计赚取1000000金币，你已经实现了财务自由！这是无数农夫梦寐以求的目标，你已经达成。",
       "condition": "total_earnings >= 1000000",
-      "reward_text": "财富自由达成！"
+      "reward_text": "财富自由达成！你的人生圆满了。"
     },
     "all_crops": {
       "name": "🌱 作物收藏家",
-      "description": "种植过所有种类的作物（16 种）",
-      "condition": "crops_grown_count >= 16",
-      "reward_text": "全作物收藏达成！"
+      "description": "种植过所有45种作物，你对每一种作物都了如指掌。这个成就需要长时间的努力和对游戏的深入了解。",
+      "condition": "crops_grown_count >= 45",
+      "reward_text": "全作物收藏达成！你是真正的作物专家。"
+    },
+    "rare_crops_5": {
+      "name": "🌟 稀有作物爱好者",
+      "description": "种植过5种稀有级别以上的作物，包括蓝莓、芒果等珍贵品种。你已经进入了高端农业领域。",
+      "condition": "rare_crops_count >= 5",
+      "reward_text": "稀有作物爱好者！你对高端作物情有独钟。"
+    },
+    "epic_crops_3": {
+      "name": "💜 史诗农夫",
+      "description": "种植过3种史诗级作物，包括葡萄、菠萝等珍贵品种。这些高价值作物为你带来了丰厚的收益。",
+      "condition": "epic_crops_count >= 3",
+      "reward_text": "史诗农夫！高端作物带来的收益相当可观。"
+    },
+    "legendary_crop": {
+      "name": "👑 传奇种植者",
+      "description": "种植过传奇级别的作物，包括樱桃、咖啡、可可豆或兰花。这是最高荣誉的象征，代表着巅峰的农业成就。",
+      "condition": "legendary_crops_count >= 1",
+      "reward_text": "传奇种植者！你已经站在了农业的顶点。"
     },
     "survive_year": {
       "name": "📅 度过四季",
-      "description": "经历过完整的四个季节",
+      "description": "经历过完整的四个季节循环，你已经见证了农场在春夏秋冬中的变化。每个季节都有独特的挑战和机遇。",
       "condition": "years_passed >= 1",
-      "reward_text": "四季轮回，生生不息！"
+      "reward_text": "四季轮回，生生不息！新的一年又开始了。"
     },
-    "storm_survivor": {
-      "name": "⛈️ 暴风雨幸存者",
-      "description": "在暴风雨中保住所有作物",
-      "condition": "storm_survived == True",
-      "reward_text": "风雨无阻！"
+    "survive_5_years": {
+      "name": "🗓️ 五年耕耘",
+      "description": "在农场上耕耘了5年，这需要持续的投入和耐心。长期的坚持让你成为了真正的农业专家。",
+      "condition": "years_passed >= 5",
+      "reward_text": "五年耕耘！你的农场承载了无数回忆。"
     },
-    "max_farm": {
-      "name": "🏘️ 农场大亨",
-      "description": "将农场升级到最高等级",
-      "condition": "upgrade_level >= 4",
-      "reward_text": "顶级农场达成！"
+    "survive_10_years": {
+      "name": "📆 十年树木",
+      "description": "在农场上经营了10年，这是一个伟大的里程碑。十年如一日的坚持证明了你对农业的热爱和执着。",
+      "condition": "years_passed >= 10",
+      "reward_text": "十年树木！你的农场已经成为传家宝。"
     },
-    "rich_harvest": {
-      "name": "🎃 丰收之王",
-      "description": "单日收获 10 个以上作物",
+    "max_level": {
+      "name": "⭐ 满级农夫",
+      "description": "达到最高等级，你的农业知识和技能已经登峰造极。这是所有农夫梦寐以求的最高荣誉。",
+      "condition": "player_level >= 50",
+      "reward_text": "满级达成！你已经是最强的农夫。"
+    },
+    "single_day_harvest_10": {
+      "name": "🎉 丰收之日",
+      "description": "单日收获10个以上作物，这是高产的一天。需要合理的规划和高效的种植策略才能达成。",
       "condition": "single_day_harvest >= 10",
-      "reward_text": "大丰收！"
+      "reward_text": "大丰收！这一天收获满满。"
+    },
+    "single_day_harvest_30": {
+      "name": "🏵️ 丰收之王",
+      "description": "单日收获30个以上作物，这是令人惊叹的高产记录。需要精心策划和大量的土地才能实现。",
+      "condition": "single_day_harvest >= 30",
+      "reward_text": "丰收之王！你的农场产能惊人。"
+    },
+    "perfect_water": {
+      "name": "💧 水务大师",
+      "description": "连续30天不间断给作物浇水，你的勤劳和坚持值得称赞。充足的水分是作物健康生长的关键。",
+      "condition": "consecutive_water_days >= 30",
+      "reward_text": "水务大师！你的作物永远不会口渴。"
+    },
+    "never_missed_harvest": {
+      "name": "📈 收获无遗漏",
+      "description": "在100次收获中从未错过任何成熟作物，这需要极高的关注度和精确的时间管理。",
+      "condition": "missed_harvests == 0 && harvest_count >= 100",
+      "reward_text": "收获无遗漏！你对农场的照顾无微不至。"
+    },
+    "rich_soil": {
+      "name": "🧱 沃土养成",
+      "description": "使用100次肥料，你的土地越来越肥沃。持续改良土壤可以显著提高作物产量和品质。",
+      "condition": "fertilizer_used >= 100",
+      "reward_text": "沃土养成！你的土地越来越肥沃了。"
+    },
+    "shop_master": {
+      "name": "🛒 购物达人",
+      "description": "在商店购买100次商品，你已经成为了商店的常客。合理的购物策略可以加速农场发展。",
+      "condition": "total_purchases >= 100",
+      "reward_text": "购物达人！商店老板都认识你了。"
+    },
+    "no_spender": {
+      "name": "💳 理性消费",
+      "description": "在拥有10万金币后仍然保持理性消费，没有铺张浪费。理财能力是农场主的重要素质。",
+      "condition": "total_earnings >= 100000 && total_purchases <= 50",
+      "reward_text": "理性消费！你的财务管理能力出众。"
+    },
+    "speed_grower": {
+      "name": "⚡ 速战速决",
+      "description": "在作物成熟的当天就完成收获，从未拖延。高效的收获节奏可以最大化收益。",
+      "condition": "same_day_harvests >= 50",
+      "reward_text": "速战速决！你的效率令人惊叹。"
+    },
+    "night_farmer": {
+      "name": "🌙 夜以继日",
+      "description": "累计进行100次夜间操作，你对农业的热情不分昼夜。勤劳的农夫总是抓住每一个机会。",
+      "condition": "night_operations >= 100",
+      "reward_text": "夜以继日！你的勤奋令人敬佩。"
+    },
+    "first_plant": {
+      "name": "🌱 首次播种",
+      "description": "种下你的第一颗种子，这是农场生命的开始。每棵作物都承载着希望和梦想。",
+      "condition": "plants_count >= 1",
+      "reward_text": "首次播种！一个新的生命诞生了。"
+    },
+    "plant_100": {
+      "name": "🌿 百种植入",
+      "description": "累计种植100次，你已经成为了种植老手。丰富的种植经验让你能够应对各种情况。",
+      "condition": "plants_count >= 100",
+      "reward_text": "百种植入！种植对你来说轻而易举。"
+    },
+    "plant_500": {
+      "name": "🌳 种植达人",
+      "description": "累计种植500次，你的种植技术已经炉火纯青。大量的实践经验让你成为了真正的专家。",
+      "condition": "plants_count >= 500",
+      "reward_text": "种植达人！教科书级别的种植技术。"
+    },
+    "diverse_farmer": {
+      "name": "🎨 多样化种植",
+      "description": "在单一季节种植过10种以上不同的作物，多样化的种植可以降低风险并提高收益。",
+      "condition": "seasonal_diversity >= 10",
+      "reward_text": "多样化种植！你的农场丰富多彩。"
+    },
+    "season_specialist": {
+      "name": "🍂 季节专家",
+      "description": "分别在不同季节各种植过5种以上作物，你已经完全掌握了四季种植的诀窍。",
+      "condition": "spring_crops >= 5 && summer_crops >= 5 && autumn_crops >= 5 && winter_crops >= 5",
+      "reward_text": "季节专家！四季种植对你来说不在话下。"
+    },
+    "water_warrior": {
+      "name": "🚿 浇水冠军",
+      "description": "累计浇水500次，你的作物从未缺水。持续的照顾是丰收的保证。",
+      "condition": "water_count >= 500",
+      "reward_text": "浇水冠军！你的作物喝足了水。"
+    },
+    "streak_30": {
+      "name": "🔥 三十天连续",
+      "description": "连续30天每天都有进行农场操作，坚持是最可贵的品质。",
+      "condition": "consecutive_days >= 30",
+      "reward_text": "三十天连续！你的毅力令人佩服。"
+    },
+    "streak_100": {
+      "name": "💪 百日坚持",
+      "description": "连续100天每天都有进行农场操作，这是一个了不起的成就。",
+      "condition": "consecutive_days >= 100",
+      "reward_text": "百日坚持！你用行动诠释了坚持的意义。"
+    },
+    "streak_365": {
+      "name": "🏅 一年坚守",
+      "description": "连续365天每天都有进行农场操作，一年的坚持铸就了伟大的成就。",
+      "condition": "consecutive_days >= 365",
+      "reward_text": "一年坚守！你是真正的农业坚守者。"
     }
   }
 }

@@ -9,7 +9,10 @@
       "water_needed": 1,
       "emoji": "🥔",
       "crop_type": "VEGETABLE",
-      "description": "常见蔬菜，生长周期短，适合新手。"
+      "description": "最基础的农作物之一，生长周期短，适应性强。土豆起源于南美洲安第斯山脉，如今已成为全球第四大粮食作物。这种作物对土壤要求不高，耐储存，是新手农夫的最佳选择。种植土豆需要保持土壤湿润但不能积水，定期除草可以提高产量。",
+      "difficulty": 1,
+      "exp_gained": 10,
+      "rarity": "COMMON"
     },
     "carrot": {
       "name": "胡萝卜",
@@ -20,7 +23,10 @@
       "water_needed": 1,
       "emoji": "🥕",
       "crop_type": "VEGETABLE",
-      "description": "生长最快的作物，收益稳定。"
+      "description": "生长速度最快的作物之一，根系发达，含丰富维生素A。胡萝卜原产于中亚和地中海地区，是世界上最受欢迎的根茎类蔬菜之一。这种作物喜欢凉爽的气候，充足的阳光和疏松的土壤可以让根系生长得更加粗壮。定期浇水保持土壤湿润，但避免过度浇水导致根系腐烂。",
+      "difficulty": 1,
+      "exp_gained": 8,
+      "rarity": "COMMON"
     },
     "tomato": {
       "name": "番茄",
@@ -31,7 +37,10 @@
       "water_needed": 2,
       "emoji": "🍅",
       "crop_type": "VEGETABLE",
-      "description": "夏季特产，需水量大，收益可观。"
+      "description": "夏季最具代表性的蔬果，既是蔬菜也是水果。番茄原产于南美洲安第斯山脉，如今已成为全球产量最高的蔬菜作物。成熟的番茄色泽鲜红饱满，果肉多汁，富含番茄红素和维生素C。种植番茄需要充足的阳光和水分，定期施肥可以提高果实品质。注意防治病虫害，及时采摘成熟果实。",
+      "difficulty": 2,
+      "exp_gained": 25,
+      "rarity": "UNCOMMON"
     },
     "corn": {
       "name": "玉米",
@@ -41,8 +50,11 @@
       "seasons": ["SUMMER", "AUTUMN"],
       "water_needed": 1,
       "emoji": "🌽",
-      "crop_type": "VEGETABLE",
-      "description": "适应性强，可在夏秋两季种植。"
+      "crop_type": "GRAIN",
+      "description": "世界三大粮食作物之一，株高挺拔，穗大粒满。玉米原产于中美洲，是美洲原住民最重要的主食作物。如今玉米已成为全球种植范围最广、产量最高的谷物。玉米喜温暖气候，需要充足的阳光照射。生长期间需要及时浇水施肥，中耕除草促进根系发育。成熟后及时收获，晾晒保存。",
+      "difficulty": 2,
+      "exp_gained": 30,
+      "rarity": "UNCOMMON"
     },
     "pumpkin": {
       "name": "南瓜",
@@ -53,7 +65,10 @@
       "water_needed": 1,
       "emoji": "🎃",
       "crop_type": "VEGETABLE",
-      "description": "秋季代表作物，生长周期较长。"
+      "description": "秋季丰收的象征作物，瓜大肉厚，甘甜可口。南瓜原产于北美洲南部，是感恩节必备的传统食材。南瓜含有丰富的β-胡萝卜素和膳食纤维，是营养价值极高的健康食材。种植南瓜需要充足的空间让藤蔓蔓延生长，喜阳光充足、排水良好的环境。生长期间保持土壤湿润，成熟后表皮硬化即可收获。",
+      "difficulty": 2,
+      "exp_gained": 35,
+      "rarity": "UNCOMMON"
     },
     "eggplant": {
       "name": "茄子",
@@ -64,7 +79,10 @@
       "water_needed": 1,
       "emoji": "🍆",
       "crop_type": "VEGETABLE",
-      "description": "秋季蔬菜，性价比不错。"
+      "description": "紫色光泽的茄果类蔬菜，肉质细嫩，营养丰富。茄子原产于印度，后传入中国并广泛种植。茄子富含维生素P和花青素，具有保护心血管的功效。种植茄子需要温暖湿润的环境，耐热不耐寒。生长期间需要充足的水分和肥料，定期采摘可以延长结果期。果实表皮光滑有光泽时为最佳采摘时机。",
+      "difficulty": 2,
+      "exp_gained": 20,
+      "rarity": "COMMON"
     },
     "cabbage": {
       "name": "白菜",
@@ -75,7 +93,10 @@
       "water_needed": 1,
       "emoji": "🥬",
       "crop_type": "VEGETABLE",
-      "description": "适应性强，三季可种，价格便宜。"
+      "description": "适应性最强的叶菜类作物，四季可种，价格亲民。大白菜原产于中国，是北方冬季最主要的新鲜蔬菜。白菜含有丰富的维生素C和膳食纤维，具有清热解毒的功效。种植白菜对土壤要求不严，但需要充足的水分供应。生长期间保持土壤湿润，及时追肥促进叶球紧实。",
+      "difficulty": 1,
+      "exp_gained": 12,
+      "rarity": "COMMON"
     },
     "watermelon": {
       "name": "西瓜",
@@ -86,7 +107,10 @@
       "water_needed": 2,
       "emoji": "🍉",
       "crop_type": "FRUIT",
-      "description": "夏季高价值水果，需水量大。"
+      "description": "夏季消暑圣品，瓜瓤红艳多汁，甘甜解渴。西瓜原产于非洲热带地区，如今是全球消费量最大的水果之一。西瓜含有大量水分和葡萄糖，具有清热解暑的功效。种植西瓜需要温暖湿润的气候和充足的日照。生长期间需要大量水分，但成熟前一周停止浇水可以提高糖度。",
+      "difficulty": 3,
+      "exp_gained": 45,
+      "rarity": "RARE"
     },
     "strawberry": {
       "name": "草莓",
@@ -97,7 +121,10 @@
       "water_needed": 2,
       "emoji": "🍓",
       "crop_type": "FRUIT",
-      "description": "春季珍品，价格昂贵，值得投资。"
+      "description": "春季珍贵浆果，色泽鲜艳，芳香浓郁。草莓原产于南美洲，如今是全球最受欢迎的小浆果之一。草莓富含维生素C和抗氧化物质，具有美容养颜的功效。种植草莓需要凉爽湿润的气候，疏松透气的土壤。生长期间保持土壤湿度，及时清除匍匐茎促进果实发育。",
+      "difficulty": 3,
+      "exp_gained": 50,
+      "rarity": "RARE"
     },
     "grape": {
       "name": "葡萄",
@@ -108,7 +135,10 @@
       "water_needed": 2,
       "emoji": "🍇",
       "crop_type": "FRUIT",
-      "description": "高价值水果，生长周期长，收益最高。"
+      "description": "古老的高档水果，串串饱满，甜美醉人。葡萄是人类最早栽培的果树之一，原产于地中海沿岸。葡萄富含葡萄糖和多种维生素，具有补气养血的功效。种植葡萄需要充足的阳光和良好的通风，架设支架供藤蔓攀爬。生长期间需要定期修剪整形，及时防治病虫害。",
+      "difficulty": 4,
+      "exp_gained": 70,
+      "rarity": "EPIC"
     },
     "wheat": {
       "name": "小麦",
@@ -119,7 +149,10 @@
       "water_needed": 1,
       "emoji": "🌾",
       "crop_type": "GRAIN",
-      "description": "最便宜的作物，三季可种，适合大规模种植。"
+      "description": "世界最重要的粮食作物，穗粒金黄，产量最高。小麦原产于中东地区的新月沃地，是人类文明的重要基石。小麦磨制的面粉是制作面包、面条等主食的主要原料。种植小麦需要肥沃疏松的土壤和充足的光照。生长期间注意防治锈病和蚜虫，成熟后及时收割晾晒。",
+      "difficulty": 1,
+      "exp_gained": 15,
+      "rarity": "COMMON"
     },
     "sunflower": {
       "name": "向日葵",
@@ -130,7 +163,10 @@
       "water_needed": 1,
       "emoji": "🌻",
       "crop_type": "FLOWER",
-      "description": "夏季花卉，高价值，装饰农场。"
+      "description": "夏季灿烂的花卉，金盘灿烂，随阳而转。向日葵原产于北美洲，是世界上最著名的观赏植物之一。向日葵的种子可以榨取高品质食用油，具有很高的经济价值。种植向日葵需要阳光充足的环境和肥沃的土壤。株高可达两米以上，花盘硕大金黄，是农场一道亮丽的风景线。",
+      "difficulty": 2,
+      "exp_gained": 40,
+      "rarity": "UNCOMMON"
     },
     "rose": {
       "name": "玫瑰",
@@ -141,7 +177,10 @@
       "water_needed": 2,
       "emoji": "🌹",
       "crop_type": "FLOWER",
-      "description": "美丽的花卉，高价值，适合送礼。"
+      "description": "花中之后，芳香馥郁，象征爱情与美丽。玫瑰原产于中国和波斯，是世界上栽培最广泛的花卉。玫瑰花瓣可以制作精油和香水，具有美容养颜的功效。种植玫瑰需要充足的阳光和良好的通风。定期修剪可以促进新枝萌发，开花期间注意防治黑斑病和蚜虫。",
+      "difficulty": 3,
+      "exp_gained": 45,
+      "rarity": "RARE"
     },
     "tulip": {
       "name": "郁金香",
@@ -152,7 +191,10 @@
       "water_needed": 1,
       "emoji": "🌷",
       "crop_type": "FLOWER",
-      "description": "春季花卉，色彩鲜艳，装饰效果好。"
+      "description": "春季球根花卉，色彩绚丽，姿态优雅。郁金香原产于中亚，后在荷兰发扬光大，成为荷兰国花。郁金香品种繁多，颜色丰富，是极受欢迎的切花和盆花材料。种植郁金香需要凉爽的气候和疏松排水的土壤。花朵大而艳丽，观赏价值极高。",
+      "difficulty": 2,
+      "exp_gained": 35,
+      "rarity": "UNCOMMON"
     },
     "radish": {
       "name": "萝卜",
@@ -163,7 +205,10 @@
       "water_needed": 1,
       "emoji": "🥬",
       "crop_type": "VEGETABLE",
-      "description": "冬季蔬菜，耐寒性强。"
+      "description": "冬季代表性根菜，白皮白肉，脆甜多汁。萝卜原产于欧亚大陆，是世界上最古老的栽培作物之一。萝卜富含维生素C和消化酶，具有促进消化的功效。种植萝卜需要疏松肥沃的土壤，凉爽的气候。生长迅速，管理简单，是冬季重要的蔬菜来源。",
+      "difficulty": 1,
+      "exp_gained": 12,
+      "rarity": "COMMON"
     },
     "chinese_cabbage": {
       "name": "大白菜",
@@ -174,7 +219,374 @@
       "water_needed": 1,
       "emoji": "🥬",
       "crop_type": "VEGETABLE",
-      "description": "冬季主要蔬菜，营养丰富。"
+      "description": "北方冬季储备菜，叶球紧实，营养丰富。大白菜是中国北方冬季最主要的新鲜蔬菜，也是制作泡菜的主要原料。白菜富含维生素C、钙和膳食纤维，具有清热利尿的功效。种植大白菜需要凉爽湿润的环境，充足的肥料。",
+      "difficulty": 1,
+      "exp_gained": 15,
+      "rarity": "COMMON"
+    },
+    "lettuce": {
+      "name": "生菜",
+      "seed_price": 45,
+      "sell_price": 100,
+      "grow_days": 2,
+      "seasons": ["SPRING", "AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🥬",
+      "crop_type": "VEGETABLE",
+      "description": "轻盈脆嫩的叶菜，是沙拉的主要原料。原产于地中海沿岸，如今在全球广泛种植。生菜富含叶酸和维生素K，具有清热安神的功效。种植生菜需要凉爽湿润的环境，避免高温直射。生长迅速，采收灵活，可以随摘随吃，保持最佳新鲜度。",
+      "difficulty": 1,
+      "exp_gained": 8,
+      "rarity": "COMMON"
+    },
+    "cucumber": {
+      "name": "黄瓜",
+      "seed_price": 60,
+      "sell_price": 150,
+      "grow_days": 4,
+      "seasons": ["SUMMER"],
+      "water_needed": 2,
+      "emoji": "🥒",
+      "crop_type": "VEGETABLE",
+      "description": "夏季清凉蔬菜，脆爽多汁，解暑佳品。黄瓜原产于印度，是世界上最常见的蔬菜之一。黄瓜富含水分和维生素E，具有清热利水的功效。种植黄瓜需要温暖湿润的环境和充足的阳光。需要搭架让藤蔓攀爬，定期浇水保持土壤湿润。",
+      "difficulty": 2,
+      "exp_gained": 18,
+      "rarity": "COMMON"
+    },
+    "pepper": {
+      "name": "青椒",
+      "seed_price": 80,
+      "sell_price": 200,
+      "grow_days": 5,
+      "seasons": ["SUMMER"],
+      "water_needed": 1,
+      "emoji": "🫑",
+      "crop_type": "VEGETABLE",
+      "description": "维生素C含量最高的蔬菜之一，色彩鲜艳，营养丰富。原产于中南美洲，如今是全球重要的蔬菜作物。青椒富含维生素C和胡萝卜素，具有增强免疫力的功效。种植青椒需要温暖的气候和充足的阳光。生长期间保持土壤湿润，及时采摘可以促进继续结果。",
+      "difficulty": 2,
+      "exp_gained": 22,
+      "rarity": "UNCOMMON"
+    },
+    "onion": {
+      "name": "洋葱",
+      "seed_price": 50,
+      "sell_price": 120,
+      "grow_days": 6,
+      "seasons": ["SPRING", "AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🧅",
+      "crop_type": "VEGETABLE",
+      "description": "厨房必备的百搭蔬菜，层层包裹，辛辣提味。洋葱原产于中亚，是人类最早栽培的蔬菜之一。洋葱含有硫化物和类黄酮，具有杀菌抗氧化的功效。种植洋葱需要疏松肥沃的土壤，凉爽的气候。耐储存，是重要的冬储蔬菜。",
+      "difficulty": 2,
+      "exp_gained": 20,
+      "rarity": "COMMON"
+    },
+    "garlic": {
+      "name": "大蒜",
+      "seed_price": 40,
+      "sell_price": 100,
+      "grow_days": 7,
+      "seasons": ["AUTUMN", "WINTER"],
+      "water_needed": 1,
+      "emoji": "🧄",
+      "crop_type": "VEGETABLE",
+      "description": "烹饪调味圣品，抗菌消炎功效显著。大蒜原产于中亚，已有五千年的栽培历史。大蒜富含大蒜素，具有强力杀菌、抗病毒、增强免疫力的功效。种植大蒜需要凉爽的气候，疏松排水良好的土壤。蒜头收获后可长期储存，是厨房不可或缺的调味食材。",
+      "difficulty": 1,
+      "exp_gained": 18,
+      "rarity": "COMMON"
+    },
+    "ginger": {
+      "name": "生姜",
+      "seed_price": 80,
+      "sell_price": 200,
+      "grow_days": 8,
+      "seasons": ["SPRING", "SUMMER"],
+      "water_needed": 2,
+      "emoji": "🫚",
+      "crop_type": "VEGETABLE",
+      "description": "暖身驱寒的根茎类作物，辛辣芳香。生姜原产于东南亚热带地区，是重要的香辛料和中药材。生姜含有姜辣素，具有温中散寒、促进消化的功效。种植生姜需要温暖湿润的环境，疏松富含有机质的土壤。生长周期长，产量高，经济效益好。",
+      "difficulty": 2,
+      "exp_gained": 25,
+      "rarity": "UNCOMMON"
+    },
+    "sweet_potato": {
+      "name": "红薯",
+      "seed_price": 60,
+      "sell_price": 150,
+      "grow_days": 9,
+      "seasons": ["SUMMER", "AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🍠",
+      "crop_type": "VEGETABLE",
+      "description": "营养丰富的根茎作物，甜蜜软糯。红薯原产于中南美洲，是重要的粮食作物和饲料作物。红薯富含膳食纤维和β-胡萝卜素，具有润肠通便的功效。种植红薯需要沙质土壤，充足的阳光。耐旱耐瘠，适应性广，产量稳定。",
+      "difficulty": 2,
+      "exp_gained": 28,
+      "rarity": "COMMON"
+    },
+    "pineapple": {
+      "name": "菠萝",
+      "seed_price": 350,
+      "sell_price": 900,
+      "grow_days": 18,
+      "seasons": ["SPRING", "SUMMER"],
+      "water_needed": 2,
+      "emoji": "🍍",
+      "crop_type": "FRUIT",
+      "description": "热带风情水果，酸甜可口。菠萝原产于南美洲巴西一带，是世界四大热带水果之一。菠萝富含维生素C和菠萝蛋白酶，具有消食止渴的功效。种植菠萝需要热带气候，酸性土壤。植株紧凑，适合规模种植，经济价值高。",
+      "difficulty": 4,
+      "exp_gained": 80,
+      "rarity": "EPIC"
+    },
+    "mango": {
+      "name": "芒果",
+      "seed_price": 400,
+      "sell_price": 1000,
+      "grow_days": 20,
+      "seasons": ["SUMMER"],
+      "water_needed": 2,
+      "emoji": "🥭",
+      "crop_type": "FRUIT",
+      "description": "热带果王，肉厚味甜。芒果原产于印度和马来西亚，是世界上最受欢迎的热带水果之一。芒果富含维生素A和维生素C，具有益胃生津的功效。种植芒果需要热带或亚热带气候，充足的阳光。果实采收后耐储存，适合远距离运输销售。",
+      "difficulty": 4,
+      "exp_gained": 90,
+      "rarity": "EPIC"
+    },
+    "peach": {
+      "name": "桃子",
+      "seed_price": 180,
+      "sell_price": 450,
+      "grow_days": 12,
+      "seasons": ["SUMMER"],
+      "water_needed": 2,
+      "emoji": "🍑",
+      "crop_type": "FRUIT",
+      "description": "夏季甜美多汁的核果，粉嫩诱人。桃子原产于中国，是中国的传统名果。桃子富含铁元素和维生素C，具有补血养颜的功效。种植桃子需要温暖湿润的气候，充足的阳光和肥沃的土壤。果实成熟期短，需及时采收。",
+      "difficulty": 3,
+      "exp_gained": 55,
+      "rarity": "RARE"
+    },
+    "pear": {
+      "name": "梨子",
+      "seed_price": 150,
+      "sell_price": 380,
+      "grow_days": 11,
+      "seasons": ["AUTUMN"],
+      "water_needed": 2,
+      "emoji": "🍐",
+      "crop_type": "FRUIT",
+      "description": "秋季润燥佳果，清脆多汁。梨子原产于中国，是世界四大水果之一。梨子富含水分和膳食纤维，具有润肺止咳的功效。种植梨子需要凉爽湿润的气候，充足的阳光。适应性强，全国各地均有栽培。",
+      "difficulty": 3,
+      "exp_gained": 50,
+      "rarity": "RARE"
+    },
+    "apple": {
+      "name": "苹果",
+      "seed_price": 200,
+      "sell_price": 500,
+      "grow_days": 15,
+      "seasons": ["AUTUMN"],
+      "water_needed": 2,
+      "emoji": "🍎",
+      "crop_type": "FRUIT",
+      "description": "世界最受欢迎的水果，红彤诱人。苹果原产于中亚，是人类最早栽培的水果之一。苹果富含果胶和维生素，具有调节肠胃的功效。种植苹果需要温带气候，充足的阳光和较大的昼夜温差。品种繁多，适应性广。",
+      "difficulty": 3,
+      "exp_gained": 60,
+      "rarity": "RARE"
+    },
+    "cherry": {
+      "name": "樱桃",
+      "seed_price": 450,
+      "sell_price": 1200,
+      "grow_days": 16,
+      "seasons": ["SPRING"],
+      "water_needed": 2,
+      "emoji": "🍒",
+      "crop_type": "FRUIT",
+      "description": "春季高端水果，晶莹剔透。樱桃原产于欧洲和亚洲，是世界上最早成熟的果树之一。樱桃富含铁元素和维生素A，具有补血益气的功效。种植樱桃需要凉爽湿润的气候，对环境要求较高。果实不耐储存，需及时销售。",
+      "difficulty": 5,
+      "exp_gained": 100,
+      "rarity": "LEGENDARY"
+    },
+    "blueberry": {
+      "name": "蓝莓",
+      "seed_price": 380,
+      "sell_price": 950,
+      "grow_days": 14,
+      "seasons": ["SUMMER"],
+      "water_needed": 2,
+      "emoji": "🫐",
+      "crop_type": "FRUIT",
+      "description": "超级水果之王，富含花青素。蓝莓原产于北美洲，是近年来全球增长最快的浆果类水果。蓝莓富含抗氧化物质，具有保护视力、延缓衰老的功效。种植蓝莓需要酸性土壤，凉爽湿润的气候。经济价值高，市场前景广阔。",
+      "difficulty": 4,
+      "exp_gained": 85,
+      "rarity": "EPIC"
+    },
+    "kiwi": {
+      "name": "猕猴桃",
+      "seed_price": 320,
+      "sell_price": 800,
+      "grow_days": 17,
+      "seasons": ["AUTUMN"],
+      "water_needed": 2,
+      "emoji": "🥝",
+      "crop_type": "FRUIT",
+      "description": "维C之王，酸甜可口。猕猴桃原产于中国湖北一带，是中国的特色水果之一。猕猴桃富含维生素C和膳食纤维，具有清热止渴的功效。种植猕猴桃需要温暖湿润的气候，支架供藤蔓攀爬。果实耐储存，货架期长。",
+      "difficulty": 4,
+      "exp_gained": 75,
+      "rarity": "EPIC"
+    },
+    "pomegranate": {
+      "name": "石榴",
+      "seed_price": 280,
+      "sell_price": 700,
+      "grow_days": 15,
+      "seasons": ["AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🍈",
+      "crop_type": "FRUIT",
+      "description": "多子多福的象征，籽粒晶莹。石榴原产于伊朗和阿富汗，是世界上最古老的果树之一。石榴富含维生素C和多酚类物质，具有抗氧化、美容养颜的功效。种植石榴需要温暖干燥的气候，耐干旱。果实观赏价值高，寓意吉祥。",
+      "difficulty": 3,
+      "exp_gained": 65,
+      "rarity": "RARE"
+    },
+    "lemon": {
+      "name": "柠檬",
+      "seed_price": 220,
+      "sell_price": 550,
+      "grow_days": 13,
+      "seasons": ["SPRING", "SUMMER"],
+      "water_needed": 2,
+      "emoji": "🍋",
+      "crop_type": "FRUIT",
+      "description": "酸味水果代表，富含维C。柠檬原产于印度和缅甸，是世界上最重要的酸类水果。柠檬富含柠檬酸和维生素C，具有生津止渴的功效。种植柠檬需要热带或亚热带气候，充足的阳光。用途广泛，可加工成果汁、调味品等。",
+      "difficulty": 3,
+      "exp_gained": 55,
+      "rarity": "RARE"
+    },
+    "pearl": {
+      "name": "棉花",
+      "seed_price": 100,
+      "sell_price": 280,
+      "grow_days": 10,
+      "seasons": ["SUMMER", "AUTUMN"],
+      "water_needed": 1,
+      "emoji": "☁️",
+      "crop_type": "INDUSTRIAL",
+      "description": "重要的经济作物，洁白如雪。棉花原产于印度和阿拉伯，是世界上最重要的纺织原料。棉花纤维可用于纺纱织布，棉籽可榨油。种植棉花需要温暖湿润的气候，充足的阳光。生长周期适中，经济效益稳定。",
+      "difficulty": 2,
+      "exp_gained": 35,
+      "rarity": "UNCOMMON"
+    },
+    "tea": {
+      "name": "茶叶",
+      "seed_price": 180,
+      "sell_price": 480,
+      "grow_days": 20,
+      "seasons": ["SPRING", "SUMMER"],
+      "water_needed": 2,
+      "emoji": "🍵",
+      "crop_type": "INDUSTRIAL",
+      "description": "世界三大饮料之一，清香四溢。茶叶原产于中国云南，是中华民族对世界的重要贡献。茶叶含有茶多酚和咖啡因，具有提神醒脑的功效。种植茶叶需要温暖湿润的气候，云雾缭绕的高山环境最佳。采摘要及时嫩芽，品质决定价值。",
+      "difficulty": 4,
+      "exp_gained": 70,
+      "rarity": "EPIC"
+    },
+    "coffee": {
+      "name": "咖啡豆",
+      "seed_price": 350,
+      "sell_price": 900,
+      "grow_days": 25,
+      "seasons": ["SUMMER", "AUTUMN"],
+      "water_needed": 2,
+      "emoji": "☕",
+      "crop_type": "INDUSTRIAL",
+      "description": "世界三大饮料之一，香浓提神。咖啡原产于埃塞俄比亚，是全球贸易量最大的农产品之一。咖啡含有咖啡因，具有提神醒脑、促进代谢的功效。种植咖啡需要热带高山气候，适当的遮阴。果实加工工艺复杂，品质分级严格。",
+      "difficulty": 5,
+      "exp_gained": 95,
+      "rarity": "LEGENDARY"
+    },
+    "cocoa": {
+      "name": "可可豆",
+      "seed_price": 400,
+      "sell_price": 1100,
+      "grow_days": 22,
+      "seasons": ["SUMMER"],
+      "water_needed": 2,
+      "emoji": "🍫",
+      "crop_type": "INDUSTRIAL",
+      "description": "巧克力原料，热带珍贵作物。可可原产于亚马逊流域，是制作巧克力的核心原料。可可富含黄酮类物质，具有保护心血管的功效。种植可可需要热带雨林气候，充足的湿度和适当的遮阴。种植难度高，产量有限，价值珍贵。",
+      "difficulty": 5,
+      "exp_gained": 110,
+      "rarity": "LEGENDARY"
+    },
+    "lavender": {
+      "name": "薰衣草",
+      "seed_price": 250,
+      "sell_price": 650,
+      "grow_days": 11,
+      "seasons": ["SUMMER"],
+      "water_needed": 1,
+      "emoji": "💜",
+      "crop_type": "FLOWER",
+      "description": "紫色浪漫花卉，香气怡人。薰衣草原产于地中海沿岸，是最著名的香草植物之一。薰衣草含有芳香精油，具有安神助眠的功效。种植薰衣草需要阳光充足、排水良好的环境。广泛应用于香水、化妆品、工艺品等领域。",
+      "difficulty": 3,
+      "exp_gained": 50,
+      "rarity": "RARE"
+    },
+    "chrysanthemum": {
+      "name": "菊花",
+      "seed_price": 180,
+      "sell_price": 450,
+      "grow_days": 9,
+      "seasons": ["AUTUMN"],
+      "water_needed": 1,
+      "emoji": "🌼",
+      "crop_type": "FLOWER",
+      "description": "秋季名花，象征高洁。菊花原产于中国，是中国的传统名花，也是世界四大切花之一。菊花含有挥发油，具有清热解毒的功效。种植菊花需要凉爽湿润的气候，充足的阳光。花期长，色彩丰富，观赏价值高。",
+      "difficulty": 2,
+      "exp_gained": 40,
+      "rarity": "UNCOMMON"
+    },
+    "orchid": {
+      "name": "兰花",
+      "seed_price": 500,
+      "sell_price": 1500,
+      "grow_days": 18,
+      "seasons": ["SPRING", "WINTER"],
+      "water_needed": 2,
+      "emoji": "🪻",
+      "crop_type": "FLOWER",
+      "description": "花中君子，典雅高贵。兰花原产于亚洲热带地区，是世界上最著名的花卉之一。兰花幽香清远，象征高洁典雅。种植兰花需要温暖湿润的环境，良好的通风和适当的散射光。品种繁多，珍稀品种价值连城。",
+      "difficulty": 5,
+      "exp_gained": 120,
+      "rarity": "LEGENDARY"
+    },
+    "bamboo": {
+      "name": "竹子",
+      "seed_price": 80,
+      "sell_price": 220,
+      "grow_days": 30,
+      "seasons": ["SPRING", "SUMMER", "AUTUMN", "WINTER"],
+      "water_needed": 1,
+      "emoji": "🎋",
+      "crop_type": "INDUSTRIAL",
+      "description": "四君子之一，坚韧挺拔。竹子原产于中国，是世界上生长最快的植物之一。竹子用途广泛，可用于建筑、家具、造纸、工艺品的制作。种植竹子需要温暖湿润的气候，疏松肥沃的土壤。根系发达，繁殖迅速，一次种植多年收获。",
+      "difficulty": 2,
+      "exp_gained": 45,
+      "rarity": "UNCOMMON"
+    },
+    "mushroom": {
+      "name": "蘑菇",
+      "seed_price": 120,
+      "sell_price": 320,
+      "grow_days": 5,
+      "seasons": ["SPRING", "AUTUMN"],
+      "water_needed": 3,
+      "emoji": "🍄",
+      "crop_type": "VEGETABLE",
+      "description": "营养丰富的菌类食物，味道鲜美。蘑菇原产于欧洲和北美洲，是重要的食用菌之一。蘑菇富含蛋白质和多种氨基酸，具有增强免疫力的功效。种植蘑菇需要阴暗潮湿的环境，适宜的温度和湿度。生长周期短，产量高，经济效益好。",
+      "difficulty": 3,
+      "exp_gained": 30,
+      "rarity": "UNCOMMON"
     }
   }
 }
