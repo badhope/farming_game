@@ -7,6 +7,9 @@ import Shop from './pages/Shop';
 import Achievements from './pages/Achievements';
 import AIAssistant from './pages/AIAssistant';
 import Statistics from './pages/Statistics';
+import IdentitySelection from './pages/IdentitySelection';
+import MainGame from './pages/MainGame';
+import { GameProvider } from './store/GameContext';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +19,22 @@ const router = createBrowserRouter([
   {
     path: '/download',
     element: <Download />,
+  },
+  {
+    path: '/millionaire',
+    element: (
+      <GameProvider>
+        <IdentitySelection />
+      </GameProvider>
+    ),
+  },
+  {
+    path: '/millionaire/game',
+    element: (
+      <GameProvider>
+        <MainGame />
+      </GameProvider>
+    ),
   },
   {
     path: '/game',

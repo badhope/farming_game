@@ -189,6 +189,16 @@ const Home: React.FC = () => {
               <HeartOutlined /> <span>休闲乐趣</span>
             </div>
           </div>
+          <div className={styles.newGameBanner}>
+            <Link to="/millionaire" className={styles.newGameLink}>
+              <span className={styles.newGameEmoji}>🎯</span>
+              <div className={styles.newGameText}>
+                <div className={styles.newGameTitle}>中国百万富翁</div>
+                <div className={styles.newGameDesc}>全新文字经营游戏 - 从白手起家到亿万富翁</div>
+              </div>
+              <Button type="primary" size="large">立即体验</Button>
+            </Link>
+          </div>
         </div>
       </section>
 
