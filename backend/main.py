@@ -5,8 +5,9 @@ FastAPI 主应用
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from backend.middleware.performance import PerformanceMonitorMiddleware
 
-from backend.api import farm, player, ai, game, shop
+from backend.api import farm, player, ai, game, shop, auth, sync, health
 
 
 def create_app() -> FastAPI:
@@ -20,6 +21,9 @@ def create_app() -> FastAPI:
         redoc_url="/api/redoc",
     )
     
+    # 性能监控中间件
+    app.add_middleware(PerformanceMonitorMiddleware, slow_request_threshold=1.0)
+    
     # 配置 CORS（允许前端访问）
     app.add_middleware(
         CORSMiddleware,
@@ -28,6 +32,8 @@ def create_app() -> FastAPI:
             "http://127.0.0.1:3000",
             "http://localhost:5173",  # Vite 开发服务器
             "http://127.0.0.1:5173",
+            "http://localhost:8000",
+            "http://127.0.0.1:8000",
         ],
         allow_credentials=True,
         allow_methods=["*"],
@@ -35,6 +41,9 @@ def create_app() -> FastAPI:
     )
     
     # 注册路由
+    app.include_router(health.router, prefix="", tags=["健康检查"])
+    app.include_router(auth.router, prefix="/api/auth", tags=["认证"])
+    app.include_router(sync.router, prefix="/api/sync", tags=["数据同步"])
     app.include_router(farm.router, prefix="/api/farm", tags=["农场管理"])
     app.include_router(player.router, prefix="/api/player", tags=["玩家数据"])
     app.include_router(ai.router, prefix="/api/ai", tags=["AI 功能"])
